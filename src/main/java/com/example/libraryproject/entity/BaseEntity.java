@@ -15,5 +15,5 @@ public abstract class BaseEntity implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdTime;
 }
