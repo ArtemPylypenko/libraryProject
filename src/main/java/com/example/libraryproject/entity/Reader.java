@@ -13,6 +13,12 @@ import java.util.List;
 @Table(name = "readers")
 @NoArgsConstructor
 public class Reader extends User {
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
     @Column(name = "phone")
     private String phone;
 

@@ -1,10 +1,12 @@
 package com.example.libraryproject.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -14,6 +16,4 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime createdTime;
 }

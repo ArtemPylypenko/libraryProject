@@ -1,18 +1,18 @@
 package com.example.libraryproject.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 
 @EqualsAndHashCode(callSuper = true)
+@Entity
 @Data
-@MappedSuperclass
-public abstract class User extends BaseEntity {
+@Table(name = "users")
+@NoArgsConstructor
+public class UserAuth extends BaseEntity {
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @Column(name = "email", unique = true)
     private String email;
