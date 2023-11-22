@@ -10,5 +10,6 @@ public interface UserRepo extends CrudRepository<UserAuth, Long> {
     @Query(value = "select * from users where email = ?1", nativeQuery = true)
     Optional<UserAuth> findByEmail(String email);
 
-
+    @Query(value = "delete from users where email = ?1", nativeQuery = true)
+    void deleteUserAuthByEmail(String email);
 }

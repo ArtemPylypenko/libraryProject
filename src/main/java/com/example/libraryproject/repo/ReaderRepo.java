@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ReaderRepo extends CrudRepository<Reader, Long> {
     @Query(value = "select * from readers where email = ?1", nativeQuery = true)
-    Optional<UserAuth> findByEmail(String email);
-
+    Optional<Reader> findByEmail(String email);
+    @Query(value = "delete from readers where email = ?1", nativeQuery = true)
+    void deleteReaderByEmail(String email);
 }

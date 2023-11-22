@@ -2,8 +2,9 @@ package com.example.libraryproject.controllers;
 
 import com.example.libraryproject.dto.UserDto;
 import com.example.libraryproject.entity.Reader;
-import com.example.libraryproject.repo.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.libraryproject.entity.Role;
+import com.example.libraryproject.services.ReaderService;
+import com.example.libraryproject.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -14,13 +15,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 @RestController
 @RequestMapping
 public class Controller {
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final ReaderService readerService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public Controller(UserService userService, ReaderService readerService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.readerService = readerService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/afterLogin")
     public RedirectView afterLogin(RedirectAttributes attributes) {
@@ -40,14 +50,14 @@ public class Controller {
         return getLoggedUserDetails().getUsername();
     }
 
-    @PostMapping("/reader/save")
-    public ResponseEntity<Object> saveUser(@RequestBody UserDto userDto) {
-        userDto.password = passwordEncoder.encode(userDto.password);
-        Reader reader = new Reader();
-        reader.setEmail(userDto.email);
-        reader.setPassword(userDto.password);
-        return userRepo.existsById(reader.getId()) ? ResponseEntity.ok("User was saved") : ResponseEntity.status(404).body("Can t save user");
-    }
+//    @PostMapping("/reader/save")
+//    public ResponseEntity<Object> saveUser(@RequestBody UserDto userDto) {
+//        userDto.password = passwordEncoder.encode(userDto.password);
+//        Reader reader = new Reader();
+//        reader.setEmail(userDto.email);
+//        reader.setPassword(userDto.password);
+//        return userRepo.existsById(reader.getId()) ? ResponseEntity.ok("User was saved") : ResponseEntity.status(404).body("Can t save user");
+//    }
 
     @GetMapping("/librarian")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
@@ -64,6 +74,12 @@ public class Controller {
     @GetMapping("/reader")
     @PreAuthorize("hasAuthority('READER')")
     public String readerPage() {
+
+        Optional<Reader> reader = readerService.findByEmail("reader1@gmail.com");
+        if (reader.isPresent()) {
+            readerService.delete(reader.get());
+        }
+
         return "Hello reader";
     }
 

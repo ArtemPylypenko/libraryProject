@@ -1,9 +1,7 @@
 package com.example.libraryproject.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +10,7 @@ import java.util.List;
 @Data
 @Table(name = "readers")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Reader extends User {
     @Column(name = "name")
     private String name;
@@ -37,5 +36,11 @@ public class Reader extends User {
                 ", placeToLive='" + placeToLive + '\'' +
                 ", books=" + books +
                 '}';
+    }
+
+    public void addBook(Book book) {
+        if (!books.contains(book)) {
+            books.add(book);
+        }
     }
 }

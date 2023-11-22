@@ -1,0 +1,49 @@
+package com.example.libraryproject.services;
+
+import com.example.libraryproject.entity.User;
+import com.example.libraryproject.entity.UserAuth;
+import com.example.libraryproject.repo.UserRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+@Service
+@RequiredArgsConstructor
+public class UserService implements ClassicalDao<UserAuth> {
+    private final UserRepo userRepo;
+
+    @Override
+    public UserAuth save(UserAuth user) {
+        return userRepo.save(user);
+    }
+
+    public UserAuth save(User user) {
+        UserAuth userAuth = new UserAuth();
+        userAuth.setEmail(user.getEmail());
+        userAuth.setPassword(user.getPassword());
+        userAuth.setRole(user.getRole());
+        return userRepo.save(userAuth);
+    }
+
+    @Override
+    public void delete(UserAuth user) {
+        userRepo.delete(user);
+    }
+
+    public void deleteByEmail(String email) {
+        userRepo.deleteUserAuthByEmail(email);
+    }
+
+    @Override
+    public List<UserAuth> getAll(UserAuth user) {
+        return StreamSupport.stream(userRepo.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+
+    public Optional<UserAuth> findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+}

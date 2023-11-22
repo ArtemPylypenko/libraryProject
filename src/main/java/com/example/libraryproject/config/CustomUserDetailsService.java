@@ -1,7 +1,8 @@
 package com.example.libraryproject.config;
 
-import com.example.libraryproject.entity.*;
+import com.example.libraryproject.entity.UserAuth;
 import com.example.libraryproject.repo.UserRepo;
+import com.example.libraryproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
