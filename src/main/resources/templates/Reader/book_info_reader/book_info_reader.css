@@ -1,0 +1,86 @@
+body {
+  background-image: url('sourse/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+header {
+  background-color: #ffb366;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-primary,
+.btn-danger {
+  margin-left: 10px;
+}
+
+.form_book {
+  max-width: 350px;
+  margin: 5% auto 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 220, 185, 0.75);
+}
+
+.form_book label {
+  font-weight: 600;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: none;
+  background-color: #f5f5f5;
+  box-shadow: none;
+}
+
+@media (max-width: 767px) {
+  .form_book {
+    max-width: 100%;
+    margin: 20px 10px 0;
+  }
+}
+
+#takeBookButton {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#takeBookButton:hover {
+  background-color: #2ecc71;
+}
+
+label {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  display: block;
+  color: #555;
+}
+
+label:hover {
+  color: #333;
+}
