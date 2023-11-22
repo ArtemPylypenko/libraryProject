@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping
@@ -19,6 +21,18 @@ public class Controller {
     private UserRepo userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/afterLogin")
+    public RedirectView afterLogin(RedirectAttributes attributes) {
+        attributes.addFlashAttribute("message", "Ласкаво просимо! Ви успішно авторизувалися.");
+        String role = getLoggedUserRole();
+        return switch (role) {
+            case "ADMIN" -> new RedirectView("/admin");
+            case "READER" -> new RedirectView("/reader");
+            case "LIBRARIAN" -> new RedirectView("/librarian");
+            default -> new RedirectView("/home");
+        };
+    }
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('READER')")
@@ -34,11 +48,34 @@ public class Controller {
         reader.setPassword(userDto.password);
         return userRepo.existsById(reader.getId()) ? ResponseEntity.ok("User was saved") : ResponseEntity.status(404).body("Can t save user");
     }
-    private UserDetails getLoggedUserDetails() {
+
+    @GetMapping("/librarian")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public String librarianPage() {
+        return "Hello librarian";
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String adminPage() {
+        return "Hello admin";
+    }
+
+    @GetMapping("/reader")
+    @PreAuthorize("hasAuthority('READER')")
+    public String readerPage() {
+        return "Hello reader";
+    }
+
+    public UserDetails getLoggedUserDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             return ((UserDetails) authentication.getPrincipal());
         }
         return null;
+    }
+
+    public String getLoggedUserRole() {
+        return getLoggedUserDetails().getAuthorities().toArray()[0].toString();
     }
 }

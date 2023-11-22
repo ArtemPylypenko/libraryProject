@@ -27,6 +27,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())
+                .formLogin(formLogin-> formLogin
+                        .defaultSuccessUrl("/afterLogin",true))
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
