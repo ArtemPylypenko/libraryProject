@@ -1,25 +1,23 @@
 package com.example.libraryproject.controllers;
 
-import com.example.libraryproject.dto.UserDto;
 import com.example.libraryproject.entity.Reader;
-import com.example.libraryproject.entity.Role;
 import com.example.libraryproject.services.ReaderService;
 import com.example.libraryproject.services.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
-@RestController
-@RequestMapping
+@EnableWebMvc
+@org.springframework.stereotype.Controller
 public class Controller {
     private final UserService userService;
     private final ReaderService readerService;
@@ -47,7 +45,7 @@ public class Controller {
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('READER')")
     public String goHome() {
-        return getLoggedUserDetails().getUsername();
+        return "test";
     }
 
 //    @PostMapping("/reader/save")
@@ -67,8 +65,8 @@ public class Controller {
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String adminPage() {
-        return "Hello admin";
+    public String adminPage(Model model) {
+        return "test";
     }
 
     @GetMapping("/reader")
