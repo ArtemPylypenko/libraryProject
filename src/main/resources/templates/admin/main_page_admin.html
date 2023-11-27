@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,7 +84,7 @@
             font-weight: 600;
         }
 
-        .book-title{
+        .book-title {
             font-size: 1.5rem;
             margin-bottom: 5px;
             color: #555;
@@ -100,22 +100,22 @@
 
         label {
             font-size: 1.5rem;
-            margin-bottom: 5px;
+            margin-bottom: 25px;
             color: #555;
         }
 
-        .curr_book{
+        .curr_book {
             background-color: rgba(248, 255, 140, 1);
             border-radius: 75px;
         }
 
 
-        #addLibrarianButton:hover {
+        input:hover {
             background-color: #52FF7B;
 
         }
 
-        #addLibrarianButton {
+        input {
             background-color: #7DC96A;
             color: white;
             border: 1px solid #3498db;
@@ -129,45 +129,37 @@
         }
 
 
-
-
-
-
     </style>
-	
+
 </head>
 
 <body class="text-center">
 <header>
-		<a th:href="@{/home_page}">
-			<h1>Library "Flower" </h1>
-		</a>
-        <div class="user-actions">
-			<form action="#" th:action="@{/logout}" method="get">
-                <button class="btn btn-danger">Logout</button>
-			</form>
-            
-        </div>
-    </header>
-	
-    <form class="form_book">
-	<label>Libririan List:</label>
-	<br>
-        <ul>
-            <li class="curr_book" th:each="libririan : ${libririans}" th:text="${libririan}">
-                <form method="POST" th:action="@{'/libririan/' + ${libririan.id}}">
-                    
-                    <label>Libririan login:</label>
-                    <a th:href=@{'/libririan/' + ${libririan.id}}}>
-                        <label th:text=${libririan.login} class="book-title">title</label>
-                    </a>
-                     <br>
-                </form>
-				<br>
-            </li>
-        </ul>
-        <br>
-        <button class="btn btn-lg btn-primary" type="button" id="addLibrarianButton" name="addLibrarian_btn">Add</button>
-    </form>
+    <a th:href="@{/home_page}">
+        <h1>Library "Flower" </h1>
+    </a>
+    <div class="user-actions">
+        <form action="#" th:action="@{/logout}" method="get">
+            <button class="btn btn-danger">Logout</button>
+        </form>
+
+    </div>
+</header>
+
+
+<label>Libririan List:</label>
+<br>
+<ul>
+    <li class="curr_book" th:each="librarian : ${librarians}">
+        <form method="GET" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
+            <label th:text=${librarian.email} class="book-title">title</label>
+            <br>
+            <input type="submit" value="Edit">
+        </form>
+    </li>
+</ul>
+<form class="form_book" method="POST" th:action="@{/libririan/add}">
+    <button class="btn btn-lg btn-primary" type="submit" id="addLibrarianButton" name="addLibrarian_btn">Add</button>
+</form>
 </body>
 </html>

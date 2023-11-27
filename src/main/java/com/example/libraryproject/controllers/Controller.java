@@ -1,5 +1,6 @@
 package com.example.libraryproject.controllers;
 
+import com.example.libraryproject.entity.Librarian;
 import com.example.libraryproject.entity.Reader;
 import com.example.libraryproject.services.ReaderService;
 import com.example.libraryproject.services.UserService;
@@ -10,10 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @EnableWebMvc
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class Controller {
     private final UserService userService;
     private final ReaderService readerService;
+
 
     private final PasswordEncoder passwordEncoder;
 
@@ -66,7 +70,30 @@ public class Controller {
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String adminPage(Model model) {
-        return "new_librarian";
+        ArrayList<Librarian> lib = new ArrayList<>();
+        Librarian librarian = new Librarian();
+        librarian.setEmail("qwe");
+        librarian.setId(1L);
+        lib.add(librarian);
+        lib.add(librarian);
+        lib.add(librarian);
+        lib.add(librarian);
+        lib.add(librarian);
+        lib.add(librarian);
+
+        model.addAttribute("librarians", lib);
+        return "admin/main_page_admin";
+    }
+
+    @GetMapping("/librarian/edit/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String editLibrarian(@PathVariable(value = "id") Long id, Model model) {
+        Librarian attributeValue = new Librarian();
+        attributeValue.setEmail("someEmail");
+        attributeValue.setPassword("pass");
+        model.addAttribute("librarian", attributeValue);
+        System.out.println("NICE");
+        return "admin/edit_librarian";
     }
 
     @GetMapping("/reader")

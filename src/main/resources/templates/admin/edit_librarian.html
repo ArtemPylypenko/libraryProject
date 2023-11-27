@@ -8,7 +8,6 @@
     <title>Library "Flower"</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="editLibrarian/edit_librarian.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -114,7 +113,7 @@
     </header>
     <form class="form_book" method="POST" th:action="@{'/editLibrarian/' + ${librarian.id}}">
         <label for="mail">Mail:</label>
-        <input th:value="${librarian.mail}" name="mail" type="text" id="mail">
+        <input th:value="${librarian.email}" name="mail" type="text" id="mail">
         <br>
         <label for="password">Password:</label>
         <input th:value="${librarian.password}" name="password" type="text" id="password">
