@@ -45,7 +45,7 @@ public class Controller {
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('READER')")
     public String goHome() {
-        return "test";
+        return "Admin/newLibrarian/new_librarian.html";
     }
 
 //    @PostMapping("/reader/save")
@@ -66,7 +66,7 @@ public class Controller {
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String adminPage(Model model) {
-        return "test";
+        return "new_librarian";
     }
 
     @GetMapping("/reader")
