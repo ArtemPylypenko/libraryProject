@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Library "Flower"</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="newReader/new_reader.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-image: url('sourse/bg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        header {
+            background-color: #ffb366;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-primary,
+        .btn-danger {
+            margin-left: 10px;
+        }
+
+        .form_book {
+            max-width: 350px;
+            margin: 5% auto 0;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 220, 185, 0.75);
+        }
+
+        .form_book label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        label {
+            font-size: 1.5rem;
+            color: #555;
+        }
+
+        #editButton:hover {
+            background-color: #52FF7B;
+
+        }
+
+        #editButton {
+            background-color: #7DC96A;
+            color: white;
+            border: 1px solid #3498db;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        #deleteButton:hover {
+            background-color: #FF5252;
+        }
+
+        #deleteButton {
+            background-color: #FF7777;
+            color: white;
+            border: 1px solid #3498db;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+    </style>
+</head>
+
+<body class="text-center">
+    <header>
+        <a th:href="@{/home_page}">
+            <h1>Library "Flower" </h1>
+        </a>
+        <div class="user-actions">
+            <form action="#" th:action="@{/logout}" method="get">
+                <button class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+    </header>
+    <form class="form_book" method="POST" th:action="@{'/editReader/' + ${reader.id}}">
+        <label for="name">Full name:</label>
+        <input th:value="${reader.name}" name="name" type="text" id="name">
+        <br>
+        <label for="ticket_number">Reader ticket number:</label>
+        <input th:value="${reader.ticket_number}" name="ticket_number" type="text" id="ticket_number">
+        <br>
+        <label for="contact_information">Contact Information:</label>
+        <input th:value="${reader.contact_information}" name="contact_information" type="text" id="contact_information">
+        <br>
+        <label for="book_list">Book list:</label>
+        <input th:value="${reader.book_list}" name="book_list" type="text" id="book_list">
+        <br>
+		<br>
+
+        <button class="btn btn-lg btn-primary" type="button" id="editButton" name="return_btn">Add</button>
+    </form>
+</body>
+</html>
