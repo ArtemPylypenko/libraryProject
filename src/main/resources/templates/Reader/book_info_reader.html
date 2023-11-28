@@ -15,10 +15,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-image: url('../sourse/bg.jpg');
+            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
 
         header {
@@ -123,24 +121,24 @@
     </header>
         <form class="form_book" method="POST" th:action="@{'/book/' + ${book.id}}">
                 <label>Book title:</label>
-                <label th:text="${book.title}"></label>
+                <label th:text="${book.name}"></label>
                 <br>
 				<label>Authors:</label>
-                <label th:text="${book.author}"></label>
+                <label th:text="${book.authors}"></label>
                 <br>
 				<label>Publishing house:</label>
-                <label th:text="${book.publishing_house}"></label>
+                <label th:text="${book.publication}"></label>
                 <br>
 				<label>Year of publication:</label>
-                <label th:text="${book.year_of_publication}"></label>
+                <label th:text="${book.givenBy}"></label>
                 <br>
 				<label>ISBN:</label>
                 <label th:text="${book.isbn}"></label>
                 <br>
 				<label>Number of free copies:</label>
-                <label th:text="${book.num_of_copies}"></label>
+                <label th:text="${book.available}"></label>
                 <br>			   
-                <button class="btn btn-lg btn-primary btn-block" id="takeBookButton" type="submit">Take a Book</button>			
+                <input class="btn btn-lg btn-primary btn-block" id="takeBookButton" type="submit" value="Take a Book">
             <br>
         </form>
 </body>

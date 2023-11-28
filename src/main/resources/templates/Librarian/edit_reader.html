@@ -15,10 +15,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-image: url('sourse/bg.jpg');
+            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
 
         header {
@@ -119,18 +117,18 @@
         <input th:value="${reader.name}" name="name" type="text" id="name">
         <br>
         <label for="ticket_number">Reader ticket number:</label>
-        <input th:value="${reader.ticket_number}" name="ticket_number" type="text" id="ticket_number">
+        <input th:value="${reader.phone}" name="ticket_number" type="text" id="ticket_number">
         <br>
         <label for="contact_information">Contact Information:</label>
-        <input th:value="${reader.contact_information}" name="contact_information" type="text" id="contact_information">
+        <input th:value="${reader.placeToLive}" name="contact_information" type="text" id="contact_information">
         <br>
         <label for="book_list">Book list:</label>
-        <input th:value="${reader.book_list}" name="book_list" type="text" id="book_list">
+        <input th:value="${reader.books}" name="book_list" type="text" id="book_list">
         <br>
 		<br>
 
-        <button class="btn btn-lg btn-primary" type="button" id="editButton" name="return_btn">Edit</button>
-		<button class="btn btn-lg btn-primary" type="button" id="deleteButton" name="delete_btn">Delete</button>
+        <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Edit">
+		<input class="btn btn-lg btn-primary" type="submit" id="deleteButton" name="delete_btn" value="Delete">
     </form>
 </body>
 </html>

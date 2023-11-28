@@ -16,10 +16,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<style>
         body {
-            background-image: url('../sourse/bg.jpg');
+            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
 
         header {
@@ -102,7 +100,7 @@
             border-color: #e74c3c;
         }
 
-        #setRatingButton {
+        #setRatingButton{
             background-color: #e74c3c;
             color: white;
             border: none;
@@ -114,7 +112,7 @@
             transition: background-color 0.3s;
         }
 
-        #setRatingButton:hover {
+        #setRatingButton :hover {
             background-color: #c0392b;
         }
 
@@ -180,17 +178,17 @@
     <form class="form_book">
 	<label>My Book:</label>
 	<br>
-        <button class="btn btn-secondary" name="sort_btn" id="sortButton">Sort by Date</button>
+        <input class="btn btn-secondary" type="submit" name="sort_btn" id="sortButton" value="Sort by Date">
         <ul>
             <li class="curr_book" th:each="book : ${books}" th:text="${book}">
                 <form method="POST" th:action="@{'/'+ ${book_list}}">
                     <a th:href="@{'/book/' + ${book.id}}}">
-                    <label class="date-label" th:text="${book.dateTaken}">time</label>
+                    <label class="date-label" th:text="${book.given_by}">time</label>
                     <label>Book title:</label>
-                    <label th:text="${book.title}" class="book-title">title</label>
+                    <label th:text="${book.name}" class="book-title">title</label>
                      <br>
                     <label>Authors:</label>
-                    <label th:text="${book.author}">author</label>
+                    <label th:text="${book.authors}">author</label>
                 </a>
                     <br>
                     <label for="rating">Rating:</label>
@@ -209,9 +207,9 @@
 						<option value="1">&#9733</option>	
 					</select>
 						
-					<button class="btn btn-lg btn-primary" type="button" id="setRatingButton" name="rate_btn">Set Rating</button>
+					<input class="btn btn-lg btn-primary" type="submit" id="setRatingButton" name="rate_btn" value="Set Rating">
                     <br>
-					<button class="btn btn-lg btn-primary" id="returnButton" type="button" id="setRatingButton" name="return_btn">Return</button>
+					<input class="btn btn-lg btn-primary" id="returnButton" type="submit"  name="return_btn" value="Return">
                 </form>
 				<br>
             </li>

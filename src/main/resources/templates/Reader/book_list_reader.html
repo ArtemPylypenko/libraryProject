@@ -15,10 +15,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<style>
         body {
-            background-image: url('../sourse/bg.jpg');
+            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
 
         header {
@@ -132,10 +130,10 @@
                 <form method="POST" th:action="@{'/'+ ${book_list}}">
                     <a th:href="@{'/book/' + ${book.id}}}">
                         <label>Book title:</label>
-                        <label th:text="${book.title}" class="book-title">title</label>
+                        <label th:text="${book.name}" class="book-title">title</label>
                          <br>
                         <label>Authors:</label>
-                        <label th:text="${book.author}">author</label>
+                        <label th:text="${book.authors}">author</label>
                     </a>
                 </form>
 				<br>

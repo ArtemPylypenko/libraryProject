@@ -15,10 +15,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-image: url('sourse/bg.jpg');
+            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
 
         header {
@@ -172,7 +170,7 @@
                     
                     <label >Reader name:</label>
                     <a th:href="@{'/reader/' + ${reader.id}}}>
-                        <label th:text="${reader.login} class="book-title">full name</label>
+                        <label th:text="${reader.name} class="book-title">full name</label>
                     </a>
                      <br>
                 </form>
@@ -180,7 +178,7 @@
             </li>
         </ul>
         <br>
-        <button class="btn btn-lg btn-primary" type="button" id="addReaderButton" name="addLibrarian_btn">Add</button>
+        <input class="btn btn-lg btn-primary" type="submit" id="addReaderButton" name="addLibrarian_btn" value="Add">
     </form>
 
     </div>
@@ -195,7 +193,7 @@
                     
                     <label >Book title:</label>
                     <a th:href="@{'/book/' + ${book.id}}}>
-                        <label th:text="${book.title} class="book-title">title</label>
+                        <label th:text="${book.name} class="book-title">title</label>
                     </a>
                      <br>
                 </form>
@@ -203,7 +201,7 @@
             </li>
         </ul>
         <br>
-        <button class="btn btn-lg btn-primary" type="button" id="addBookButton" name="addLibrarian_btn">Add</button>
+        <input class="btn btn-lg btn-primary" type="submit" id="addBookButton" name="addLibrarian_btn" value="Add">
     </form>
 </div>
 </div>

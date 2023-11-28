@@ -15,10 +15,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-image: url('sourse/bg.jpg');
+            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
 
         header {
@@ -116,26 +114,26 @@
     </header>
     <form class="form_book" method="POST" th:action="@{'/editBook/' + ${book.id}}">
         <label for="title">Book title:</label>
-        <input th:value="${book.title}" name="title" type="text" id="title">
+        <input th:value="${book.name}" name="title" type="text" id="title">
         <br>
         <label for="author">Authors:</label>
-        <input th:value="${book.author}" name="author" type="text" id="author">
+        <input th:value="${book.authors}" name="author" type="text" id="author">
         <br>
         <label for="publishing_house">Publishing house:</label>
-        <input th:value="${book.publishing_house}" name="publishing_house" type="text" id="publishing_house">
+        <input th:value="${book.publication}" name="publishing_house" type="text" id="publishing_house">
         <br>
         <label for="year_of_publication">Year of publication:</label>
-        <input th:value="${book.year_of_publication}" name="year_of_publication" type="text" id="year_of_publication">
+        <input th:value="${book.given_by}" name="year_of_publication" type="text" id="year_of_publication">
         <br>
         <label for="isbn">ISBN:</label>
         <input th:value="${book.isbn}" name="isbn" type="text" id="isbn">
         <br>
         <label for="num_of_copies">Number of free copies:</label>
-        <input th:value="${book.num_of_copies}" name="num_of_copies" type="text" id="num_of_copies">
+        <input th:value="${book.available}" name="num_of_copies" type="text" id="num_of_copies">
         <br>
         <br>
-        <button class="btn btn-lg btn-primary" type="button" id="editButton" name="return_btn">Edit</button>
-		<button class="btn btn-lg btn-primary" type="button" id="deleteButton" name="delete_btn">Delete</button>
+        <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Edit">
+		<input class="btn btn-lg btn-primary" type="submit" id="deleteButton" name="delete_btn" value="Delete">
     </form>
 </body>
 </html>
