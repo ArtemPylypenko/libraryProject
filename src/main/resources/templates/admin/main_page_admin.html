@@ -172,7 +172,7 @@
 <ul>
     <li class="curr_book" th:each="librarian : ${librarians}">
         <form method="GET" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
-            <label th:text=${librarian.email} class="book-title">title</label>
+            <label th:text="${librarian.email}" class="book-title">title</label>
             <br>
             <input type="submit" value="Edit">
         </form>
