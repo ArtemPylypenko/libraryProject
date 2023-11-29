@@ -36,4 +36,8 @@ public class BookService implements ClassicalDao<Book> {
     public Optional<Book> getById(Long id) {
         return bookRepo.findById(id);
     }
+
+    public void updateById(String name, String authors, int publication, String isbn, String given_by, Long id) {
+        bookRepo.updateBook(name, authors, publication, isbn, given_by, id);
+    }
 }

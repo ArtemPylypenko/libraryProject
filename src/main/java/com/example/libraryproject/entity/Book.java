@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,12 +15,13 @@ import java.util.Set;
 @Table(name = "books")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@ToString
 public class Book extends BaseEntity {
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "authors")
+        @Column(name = "authors")
     private String authors;
 
     @Column(name = "publication")

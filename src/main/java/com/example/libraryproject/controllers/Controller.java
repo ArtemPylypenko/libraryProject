@@ -142,19 +142,54 @@ public class Controller {
 
     @PostMapping("/book/add")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
-    public RedirectView addBook(@RequestParam("author") String author,
-                                @RequestParam("publishing_house") String publishing_house,
-                                @RequestParam("name") String name,
-                                @RequestParam("isbn") String isbn) {
+    public RedirectView addBook(@RequestParam("name") String name,
+                                @RequestParam("authors") String authors,
+                                @RequestParam("given_by") String given_by,
+                                @RequestParam("isbn") String isbn,
+                                @RequestParam("publication") int publication) {
+
         Book book = new Book();
-        book.setAuthors(author);
         book.setName(name);
+        book.setAuthors(authors);
+        book.setGivenBy(given_by);
         book.setIsbn(isbn);
+        book.setPublication(publication);
+        book.setRating(3D);
         book.setAvailable(true);
 
         bookService.save(book);
         return new RedirectView("/librarian");
     }
+
+
+    @GetMapping("book/edit/{id}")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public String editBook(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("book", bookService.getById(id).get());
+        return "librarian/edit_book";
+    }
+
+    @PostMapping("book/edit/{id}")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public RedirectView editBook(@RequestParam("title") String name,
+                                 @RequestParam("author") String authors,
+                                 @RequestParam("given_by") String givenBy,
+                                 @RequestParam("publication") int publication,
+                                 @RequestParam("isbn") String isbn,
+                                 @PathVariable(value = "id") Long id,
+                                 RedirectAttributes attributes) {
+        if (Objects.equals(name, "") || Objects.equals(authors, "") || Objects.equals(givenBy, "")
+                || Objects.equals(isbn, "")) {
+            attributes.addFlashAttribute(ERROR, "U should avoid empty fields!");
+            return new RedirectView("/librarian");
+        }
+
+        bookService.updateById(name, authors, publication, isbn, givenBy, id);
+        attributes.addFlashAttribute(SUCCESS, "Edited successfully");
+
+        return new RedirectView("/librarian");
+    }
+
 
     @GetMapping("reader/add")
     @PreAuthorize("hasAuthority('LIBRARIAN')")

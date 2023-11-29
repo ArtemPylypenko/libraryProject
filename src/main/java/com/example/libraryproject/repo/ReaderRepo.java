@@ -12,4 +12,7 @@ public interface ReaderRepo extends CrudRepository<Reader, Long> {
     Optional<Reader> findByEmail(String email);
     @Query(value = "delete from readers where email = ?1", nativeQuery = true)
     void deleteReaderByEmail(String email);
+
+    @Override
+    Optional<Reader> findById(Long aLong);
 }

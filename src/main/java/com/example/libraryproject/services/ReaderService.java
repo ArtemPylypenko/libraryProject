@@ -1,6 +1,5 @@
 package com.example.libraryproject.services;
 
-import com.example.libraryproject.entity.BookHistory;
 import com.example.libraryproject.entity.Reader;
 import com.example.libraryproject.repo.BookHistoryRepo;
 import com.example.libraryproject.repo.ReaderRepo;
@@ -42,4 +41,7 @@ public class ReaderService implements ClassicalDao<Reader> {
         return readerRepo.findByEmail(email);
     }
 
+    public Optional<Reader> getById(Long id) {
+        return readerRepo.findById(id);
+    }
 }

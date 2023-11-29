@@ -1,10 +1,7 @@
 package com.example.libraryproject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import java.util.HashSet;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Table(name = "readers")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Reader extends User {
     @Column(name = "name")
     private String name;

@@ -1,6 +1,8 @@
 package com.example.libraryproject.repo;
 
 import com.example.libraryproject.entity.Book;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,4 +13,8 @@ public interface BookRepo extends CrudRepository<Book, Long> {
     @Query(value = "select available from books where name = ?1 and authors = ?2", nativeQuery = true)
     boolean isAvailable(String bookName, String authors);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Book b SET b.name = :name, b.authors = :authors, b.publication = :publication, b.isbn = :isbn, b.givenBy = :given_by WHERE b.id = :id")
+    void updateBook(String name, String authors,int publication,String isbn, String given_by, Long id);
 }
