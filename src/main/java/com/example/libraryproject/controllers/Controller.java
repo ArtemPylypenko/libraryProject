@@ -1,8 +1,10 @@
 package com.example.libraryproject.controllers;
 
+import com.example.libraryproject.entity.Book;
 import com.example.libraryproject.entity.Librarian;
 import com.example.libraryproject.entity.Reader;
 import com.example.libraryproject.entity.Role;
+import com.example.libraryproject.services.BookService;
 import com.example.libraryproject.services.LibrarianService;
 import com.example.libraryproject.services.ReaderService;
 import com.example.libraryproject.services.UserService;
@@ -31,6 +33,7 @@ public class Controller {
     private final UserService userService;
     private final ReaderService readerService;
     private final LibrarianService librarianService;
+    private final BookService bookService;
     private final PasswordEncoder passwordEncoder;
 
     private static final String SUCCESS = "success";
@@ -45,6 +48,12 @@ public class Controller {
             case LIBRARIAN -> new RedirectView("/librarian");
         };
     }
+
+    // ==== ADMIN ====
+    //
+    //
+    //
+    // ==== ADMIN ====
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -109,15 +118,66 @@ public class Controller {
         return new RedirectView("/admin");
     }
 
+    // ==== LIBRARIAN ====
+    //
+    //
+    //
+    // ==== LIBRARIAN ====
+
     @GetMapping("/librarian")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
     public String librarianPage(Model model) {
 
-        Optional<Reader> reader = readerService.findByEmail("reader1@gmail.com");
-        reader.ifPresent(readerService::delete);
+        model.addAttribute("readers", readerService.getAll());
+        model.addAttribute("books", bookService.getAll());
 
         return "librarian/main_page_librarian";
     }
+
+    @GetMapping("/book/add")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public String getAddBookPage() {
+        return "librarian/new_book";
+    }
+
+    @PostMapping("/book/add")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public RedirectView addBook(@RequestParam("author") String author,
+                                @RequestParam("publishing_house") String publishing_house,
+                                @RequestParam("name") String name,
+                                @RequestParam("isbn") String isbn) {
+        Book book = new Book();
+        book.setAuthors(author);
+        book.setName(name);
+        book.setIsbn(isbn);
+        book.setAvailable(true);
+
+        bookService.save(book);
+        return new RedirectView("/librarian");
+    }
+
+    @GetMapping("reader/add")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public String getAddReaderPage() {
+        return "librarian/new_reader";
+    }
+
+    @PostMapping("/reader/add")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public RedirectView addReader(@RequestParam("author") String author,
+                                  @RequestParam("publishing_house") String publishing_house,
+                                  @RequestParam("name") String name,
+                                  @RequestParam("isbn") String isbn) {
+        Book book = new Book();
+        book.setAuthors(author);
+        book.setName(name);
+        book.setIsbn(isbn);
+        book.setAvailable(true);
+
+        bookService.save(book);
+        return new RedirectView("/librarian");
+    }
+
 
     @GetMapping("/reader")
     @PreAuthorize("hasAuthority('READER')")
@@ -128,6 +188,12 @@ public class Controller {
 
         return "Hello reader";
     }
+
+    // ==== HELP ====
+    //
+    //
+    //
+    // ==== HELP ====
 
     public UserDetails getLoggedUserDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

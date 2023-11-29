@@ -111,12 +111,12 @@
             </form>
         </div>
     </header>
-    <form class="form_book" method="POST" th:action="@{'/editBook/' + ${book.id}}">
-        <label for="title">Book title:</label>
-        <input name="title" type="text" id="title">
-        <br>
+    <form class="form_book" method="POST" th:action="@{'/book/add'}">
         <label for="author">Authors:</label>
         <input name="author" type="text" id="author">
+        <br>
+        <label for="name">Title:</label>
+        <input name="name" type="text" id="name">
         <br>
         <label for="publishing_house">Publishing house:</label>
         <input name="publishing_house" type="text" id="publishing_house">
@@ -126,10 +126,6 @@
         <br>
         <label for="isbn">ISBN:</label>
         <input name="isbn" type="text" id="isbn">
-        <br>
-        <label for="num_of_copies">Number of free copies:</label>
-        <input name="num_of_copies" type="text" id="num_of_copies">
-        <br>
         <br>
         <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Add">
     </form>

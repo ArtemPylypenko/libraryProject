@@ -1,6 +1,8 @@
 package com.example.libraryproject.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,6 @@ public class Book extends BaseEntity {
     @Column(name = "available")
     private boolean available;
 
-    @ManyToOne()
-    @JoinColumn(name = "id",insertable=false, updatable=false)
-    private Reader reader;
+    @Column(name = "rating")
+    private Double rating;
 }

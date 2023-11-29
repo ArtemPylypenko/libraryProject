@@ -1,8 +1,6 @@
 package com.example.libraryproject.services;
 
-import com.example.libraryproject.entity.Book;
 import com.example.libraryproject.entity.Reader;
-import com.example.libraryproject.entity.UserAuth;
 import com.example.libraryproject.repo.ReaderRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,8 +38,4 @@ public class ReaderService implements ClassicalDao<Reader> {
         return readerRepo.findByEmail(email);
     }
 
-    public void addBook(String email, Book book) {
-        Optional<Reader> reader = readerRepo.findByEmail(email);
-        reader.ifPresent(value -> value.addBook(book));
-    }
 }

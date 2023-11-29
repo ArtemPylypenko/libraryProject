@@ -111,10 +111,7 @@
             </form>
         </div>
     </header>
-    <form class="form_book" method="POST" th:action="@{'/editReader/' + ${reader.id}}">
-        <label for="name">Full name:</label>
-        <input  name="name" type="text" id="name">
-        <br>
+    <form class="form_book" method="POST" th:action="@{'/editReader/'}">
         <label for="ticket_number">Reader ticket number:</label>
         <input  name="ticket_number" type="text" id="ticket_number">
         <br>

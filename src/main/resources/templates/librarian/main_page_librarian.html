@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -83,7 +83,7 @@
             font-weight: 600;
         }
 
-        .book-title{
+        .book-title {
             font-size: 1.5rem;
             margin-bottom: 5px;
             color: #555;
@@ -103,18 +103,18 @@
             color: #555;
         }
 
-        .curr_book{
+        .curr_book {
             background-color: rgba(248, 255, 140, 1);
             border-radius: 75px;
         }
 
 
-        #addReaderButton,#addBookButton:hover {
+        #addReaderButton, #addBookButton:hover {
             background-color: #52FF7B;
 
         }
 
-        #addReaderButton,#addBookButton {
+        #addReaderButton, #addBookButton {
             background-color: #7DC96A;
             color: white;
             border: 1px solid #3498db;
@@ -134,75 +134,73 @@
             flex-flow: row nowrap;
         }
 
-        .form_left, .form_right{
+        .form_left, .form_right {
             height: auto;
             flex-grow: 1;
         }
 
     </style>
-	
+
 </head>
 
 <body class="text-center">
 <header>
-		<a th:href="@{/home_page}">
-			<h1>Library "Flower" </h1>
-		</a>
-        <div class="user-actions">
-			<form action="#" th:action="@{/logout}" method="get">
-                <button class="btn btn-danger">Logout</button>
-			</form>
-            
-        </div>
-    </header>
-	
-    <div class="flex-container">
+    <a th:href="@{/home_page}">
+        <h1>Library "Flower" </h1>
+    </a>
+    <div class="user-actions">
+        <form action="#" th:action="@{/logout}" method="get">
+            <button class="btn btn-danger">Logout</button>
+        </form>
+
+    </div>
+</header>
+
+<div class="flex-container">
 
 
     <div class="form_left">
-    <form class="form_book">
-	<label>Reader List:</label>
-	<br>
-        <ul>
-            <li class="curr_book" th:each="reader : ${libririans}" th:text="${reader}">
-                <form method="POST" th:action="@{'/reader/' + ${reader.id}}">
-                    
-                    <label >Reader name:</label>
-                    <a th:href="@{'/reader/' + ${reader.id}}}>
-                        <label th:text="${reader.name} class="book-title">full name</label>
-                    </a>
-                     <br>
-                </form>
-				<br>
-            </li>
-        </ul>
-        <br>
-        <input class="btn btn-lg btn-primary" type="submit" id="addReaderButton" name="addLibrarian_btn" value="Add">
-    </form>
+        <form class="form_book" method="get" th:action="@{'/reader/add'}">
+            <label>Reader List:</label>
+            <br>
+            <ul>
+                <li class="curr_book" th:each="reader : ${readers}" th:text="${reader}">
+                    <form method="POST" th:action="@{'/reader/add'}">
+
+                        <label>Reader name:</label>
+                        <label th:text=" ${reader.name}" class="book-title">full name</label>
+                        <br>
+                        <input class="btn btn-lg btn-primary" type="submit" name="addLibrarian_btn"
+                               value="Edit">
+                    </form>
+                    <br>
+                </li>
+            </ul>
+            <br>
+            <input class="btn btn-lg btn-primary" type="submit" name="addLibrarian_btn"
+                   value="Add">
+        </form>
 
     </div>
 
-        <div class="form_right">
-      <form class="form_book">
-    <label>Book List:</label>
-    <br>
-        <ul>
-            <li class="curr_book" th:each="book : ${libririans}" th:text="${book}">
-                <form method="POST" th:action="@{'/book/' + ${book.id}}">
-                    
-                    <label >Book title:</label>
-                    <a th:href="@{'/book/' + ${book.id}}}>
-                        <label th:text="${book.name} class="book-title">title</label>
-                    </a>
-                     <br>
-                </form>
-                <br>
-            </li>
-        </ul>
-        <br>
-        <input class="btn btn-lg btn-primary" type="submit" id="addBookButton" name="addLibrarian_btn" value="Add">
-    </form>
-</div>
+    <div class="form_right">
+        <form class="form_book" method="get" th:action="@{'/book/add'}">
+            <label>Book List:</label>
+            <br>
+            <ul>
+                <li class="curr_book" th:each="book : ${books}" th:text="${book}">
+                    <form method="POST" th:action="@{'/book/add'}">
+                        <label>Book title:</label>
+                        <label th:text=" ${book.name}" class="book-title">title</label>
+                        <br>
+                    </form>
+                    <br>
+                </li>
+            </ul>
+            <br>
+            <input class="btn btn-lg btn-primary" type="submit" id="addBookButton" name="addLibrarian_btn" value="Add">
+        </form>
+    </div>
 </div>
 </body>
 </html>
