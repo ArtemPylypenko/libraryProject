@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -35,4 +36,9 @@ public class Reader extends User {
             inverseJoinColumns = {@JoinColumn(name = "book_id")}
     )
     private Set<Book> books = new HashSet<>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, phone);
+    }
 }

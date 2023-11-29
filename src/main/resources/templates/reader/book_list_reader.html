@@ -114,13 +114,14 @@
             
         </div>
     </header>
-	
+<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
     <div class="form_book">
 	<label>Book List:</label>
 	<br>
         <ul>
             <li class="curr_book" th:each="book : ${books}">
-                <form method="POST" th:action="@{'/bookInfo/'+ ${book.getId()}}">
+                <form method="get" th:action="@{'/bookInfo/'+ ${book.getId()}}">
                         <label>Book title:</label>
                         <label th:text="${book.name}" class="book-title"></label>
                          <br>

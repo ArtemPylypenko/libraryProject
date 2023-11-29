@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class Book extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-        @Column(name = "authors")
+    @Column(name = "authors")
     private String authors;
 
     @Column(name = "publication")
@@ -41,4 +42,9 @@ public class Book extends BaseEntity {
 
     @ManyToMany(mappedBy = "books", cascade = {CascadeType.DETACH})
     private Set<Reader> readers = new HashSet<>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authors, name, givenBy);
+    }
 }

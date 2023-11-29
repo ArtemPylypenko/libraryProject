@@ -44,4 +44,8 @@ public class BookService implements ClassicalDao<Book> {
     public void updateById(String name, String authors, int publication, String isbn, String given_by, Long id) {
         bookRepo.updateBook(name, authors, publication, isbn, given_by, id);
     }
+
+    public void updateAvailable(boolean available, Long id) {
+        bookRepo.updateAvailable(available, id);
+    }
 }

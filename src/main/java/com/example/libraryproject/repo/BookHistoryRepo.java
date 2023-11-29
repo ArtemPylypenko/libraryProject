@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface BookHistoryRepo extends CrudRepository<BookHistory, Long> {
 
 
-    @Query(value = "select * from book_history where book_id = ?1 and user_id = ?2", nativeQuery = true)
-    Optional<BookHistory> existsBookUser(Long book, Long user);
+    @Query(value = "select * from book_history where book_id = ?1 and reader_id = ?2", nativeQuery = true)
+    Optional<BookHistory> existsBookUser(Long book, Long reader);
 
     @Modifying
     @Transactional

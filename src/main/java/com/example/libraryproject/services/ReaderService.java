@@ -49,6 +49,10 @@ public class ReaderService implements ClassicalDao<Reader> {
         return readerRepo.findById(id);
     }
 
+    public Optional<Reader> getByEmail(String email) {
+        return readerRepo.findByEmail(email);
+    }
+
     public void update(String email, String password, String name, String surname, String phone, String placeToLive, Long id) {
         readerRepo.update(email, password, name, surname, phone, placeToLive, id);
     }

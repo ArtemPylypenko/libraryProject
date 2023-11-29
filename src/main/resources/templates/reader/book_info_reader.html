@@ -118,7 +118,7 @@
             
         </div>
     </header>
-        <form class="form_book" method="POST" th:action="@{'/book/' + ${book.id}}">
+        <form class="form_book" method="POST" th:action="@{'/bookTake/' + ${book.id}}">
                 <label>Book title:</label>
                 <label th:text="${book.name}"></label>
                 <br>
@@ -126,7 +126,7 @@
                 <label th:text="${book.authors}"></label>
                 <br>
 				<label>Publishing house:</label>
-                <label th:text="${book.given_by}"></label>
+                <label th:text="${book.givenBy}"></label>
                 <br>
 				<label>Year of publication:</label>
                 <label th:text="${book.publication}"></label>

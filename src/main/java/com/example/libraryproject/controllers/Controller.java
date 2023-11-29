@@ -4,10 +4,7 @@ import com.example.libraryproject.entity.Book;
 import com.example.libraryproject.entity.Librarian;
 import com.example.libraryproject.entity.Reader;
 import com.example.libraryproject.entity.Role;
-import com.example.libraryproject.services.BookService;
-import com.example.libraryproject.services.LibrarianService;
-import com.example.libraryproject.services.ReaderService;
-import com.example.libraryproject.services.UserService;
+import com.example.libraryproject.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -33,6 +30,7 @@ public class Controller {
     private final ReaderService readerService;
     private final LibrarianService librarianService;
     private final BookService bookService;
+    private final BookHistoryService historyService;
     private final PasswordEncoder passwordEncoder;
 
     private static final String SUCCESS = "success";
@@ -98,7 +96,12 @@ public class Controller {
             return new RedirectView("/admin");
         }
         if (librarianService.existByEmail(email)) {
-            attributes.addFlashAttribute(ERROR, "Such email already exist!");
+            if (email.equals(librarianService.getById(id).get().getEmail())) {
+                librarianService.updateById(email, password, id);
+                attributes.addFlashAttribute(SUCCESS, "Edited successfully");
+            } else {
+                attributes.addFlashAttribute(ERROR, "Such email already exist!");
+            }
             return new RedirectView("/admin");
         }
         librarianService.updateById(email, password, id);
@@ -275,8 +278,26 @@ public class Controller {
     @GetMapping("/bookInfo/{id}")
     @PreAuthorize("hasAuthority('READER')")
     public String bookInfo(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("books", bookService.getAll());
-        return "reader/book_list_reader";
+        model.addAttribute("book", bookService.getById(id).get());
+        return "reader/book_info_reader";
+    }
+
+    @PostMapping("/bookTake/{id}")
+    @PreAuthorize("hasAuthority('READER')")
+    public RedirectView takeBook(@PathVariable("id") Long id, RedirectAttributes attributes) {
+        Long loggedReaderId = getLoggedReaderId();
+        if (bookService.getById(id).get().isAvailable()) {
+            if (!historyService.existsByBookAndUser(id, loggedReaderId)) {
+                attributes.addFlashAttribute(SUCCESS, "Book added to your books");
+                historyService.addReaderBook(readerService.getById(loggedReaderId).get(), bookService.getById(id).get());
+                bookService.updateAvailable(false, id);
+            } else {
+                attributes.addFlashAttribute(ERROR, "Reader has such book!");
+            }
+        } else {
+            attributes.addFlashAttribute(ERROR, "Book is not available!");
+        }
+        return new RedirectView("/reader");
     }
 
 
@@ -286,7 +307,7 @@ public class Controller {
     //
     // ==== HELP ====
 
-    public UserDetails getLoggedUserDetails() {
+    private UserDetails getLoggedUserDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             return ((UserDetails) authentication.getPrincipal());
@@ -294,7 +315,12 @@ public class Controller {
         return null;
     }
 
-    public String getLoggedUserRole() {
+    private Long getLoggedReaderId() {
+        return readerService.getByEmail(getLoggedUserDetails().getUsername()).get().getId();
+    }
+
+
+    private String getLoggedUserRole() {
         return getLoggedUserDetails().getAuthorities().toArray()[0].toString();
     }
 }

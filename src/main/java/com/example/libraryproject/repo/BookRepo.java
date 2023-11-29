@@ -16,5 +16,10 @@ public interface BookRepo extends CrudRepository<Book, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Book b SET b.name = :name, b.authors = :authors, b.publication = :publication, b.isbn = :isbn, b.givenBy = :given_by WHERE b.id = :id")
-    void updateBook(String name, String authors,int publication,String isbn, String given_by, Long id);
+    void updateBook(String name, String authors, int publication, String isbn, String given_by, Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Book b SET b.available = :available WHERE b.id = :id")
+    void updateAvailable(boolean available, Long id);
 }
