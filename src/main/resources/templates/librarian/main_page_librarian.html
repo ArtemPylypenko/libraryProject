@@ -134,7 +134,7 @@
             flex-flow: row nowrap;
         }
 
-        .form_left, .form_right {
+        .form_left, .form_right ,.form_center {
             height: auto;
             flex-grow: 1;
 
@@ -235,24 +235,26 @@
             </form>
         </div>
     </div>
-</div>
 
-<div class="form_center">
-    <div class="form_book">
-        <ul>
-            <label>Top 5 Book:</label>
-            <li class="curr_book" th:each="book : ${books}">
-                <label>Book title:</label>
-                <label th:text=" ${book.name}" class="book-title"></label>
-                <br>
-                <label>Rating:</label>
-                <label th:text=" ${book.rating}" class="book-title"></label>
-                <br>
-                <br>
-            </li>
-        </ul>
+    <div class="form_center">
+        <div class="form_book">
+            <ul>
+                <label>Top 5 Book:</label>
+                <li class="curr_book" th:each="book : ${books}">
+                    <label>Book title:</label>
+                    <label th:text=" ${book.name}" class="book-title"></label>
+                    <br>
+                    <label>Rating:</label>
+                    <label th:text=" ${book.rating}" class="book-title"></label>
+                    <br>
+                    <br>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
+
+
 
 </body>
 </html>
