@@ -37,4 +37,4 @@ build/
 out/
 
 ### Spring ###
-.properties
+*.properties
