@@ -111,28 +111,31 @@
             </form>
         </div>
     </header>
-    <form class="form_book" method="POST" th:action="@{'/editBook/' + ${book.id}}">
+    <div  class="form_book" >
+    <form method="POST" th:action="@{'/editBook/' + ${book.id}}">
         <label for="title">Book title:</label>
         <input th:value="${book.name}" name="title" type="text" id="title">
         <br>
         <label for="author">Authors:</label>
         <input th:value="${book.authors}" name="author" type="text" id="author">
         <br>
-        <label for="publishing_house">Publishing house:</label>
-        <input th:value="${book.publication}" name="publishing_house" type="text" id="publishing_house">
+        <label for="given_by">Publishing house:</label>
+        <input th:value="${book.given_by}" name="given_by" type="text" id="given_by">
         <br>
-        <label for="year_of_publication">Year of publication:</label>
-        <input th:value="${book.given_by}" name="year_of_publication" type="text" id="year_of_publication">
+        <label for="publication">Year of publication:</label>
+        <input th:value="${book.publication}" name="publication" type="text" id="publication">
         <br>
         <label for="isbn">ISBN:</label>
         <input th:value="${book.isbn}" name="isbn" type="text" id="isbn">
         <br>
-        <label for="num_of_copies">Number of free copies:</label>
-        <input th:value="${book.available}" name="num_of_copies" type="text" id="num_of_copies">
-        <br>
         <br>
         <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Edit">
-		<input class="btn btn-lg btn-primary" type="submit" id="deleteButton" name="delete_btn" value="Delete">
+
     </form>
+
+    <form  method="POST" th:action="@{'/book/delete/' + ${book.id}}">
+        <input class="btn btn-lg btn-primary" type="submit" id="deleteButton" name="delete_btn" value="Delete">
+    </form>
+    </div>
 </body>
 </html>

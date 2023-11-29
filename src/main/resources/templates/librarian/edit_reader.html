@@ -45,11 +45,12 @@
 
         .form_book {
             max-width: 350px;
-            margin: 5% auto 0;
+            margin: 2% auto 2%;
             padding: 10px;
             border-radius: 20px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
             background-color: rgba(255, 220, 185, 0.75);
+
         }
 
         .form_book label {
@@ -110,21 +111,36 @@
             <button class="btn btn-danger">Logout</button>
         </form>
     </div>
-</header>
-<form class="form_book" method="POST" th:action="@{'/editReader/'}">
-    <label for="ticket_number">Reader ticket number:</label>
-    <input th:value="${reader.phone}" name="ticket_number" type="text" id="ticket_number">
-    <br>
-    <label for="contact_information">Contact Information:</label>
-    <input th:value="${reader.placeToLive}" name="contact_information" type="text" id="contact_information">
-    <br>
-    <label for="book_list">Book list:</label>
-    <input th:value="${reader.books}" name="book_list" type="text" id="book_list">
-    <br>
-    <br>
 
+</header>
+<div class="form_book">
+<form  method="POST" th:action="@{'/editReader/' + ${reader.id}}">
+    <label for="email">email:</label>
+    <input th:value="${reader.email}" name="email" type="text" id="email">
+    <br>
+    <label for="password">password:</label>
+    <input th:value="${reader.password}"  name="password" type="text" id="password">
+    <br>
+    <label for="name">Name:</label>
+    <input th:value="${reader.name}"  name="name" type="text" id="name">
+    <br>
+    <label for="surname">Surname:</label>
+    <input th:value="${reader.surname}"  name="surname" type="text" id="surname">
+    <br>
+    <label for="phone">Phone:</label>
+    <input  th:value="${reader.phone}" name="phone" type="text" id="phone">
+    <br>
+    <label for="place_to_live">Place to live:</label>
+    <input th:value="${reader.place_to_live}" name="place_to_live" type="text" id="place_to_live">
+    <br>
+    <br>
     <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Edit">
+</form>
+
+<form  method="POST" th:action="@{'/reader/delete/' + ${reader.id}}">
     <input class="btn btn-lg btn-primary" type="submit" id="deleteButton" name="delete_btn" value="Delete">
 </form>
+
+</div>
 </body>
 </html>

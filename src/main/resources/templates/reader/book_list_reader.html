@@ -33,31 +33,7 @@
             margin: 0;
         }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
-        }
 
-        #searchInput {
-            border: none;
-            border-radius: 5px;
-            padding: 8px;
-            margin-right: 10px;
-        }
-
-        #searchButton {
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #searchButton:hover {
-            background-color: #2471a3;
-        }
 
         .user-actions {
             display: flex;
@@ -101,6 +77,24 @@
             border-radius: 75px;
         }
 
+        #editButton:hover {
+            background-color: #52FF7B;
+
+        }
+
+        #editButton {
+            background-color: #7DC96A;
+            color: white;
+            border: 1px solid #3498db;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
     </style>
 </head>
 
@@ -121,23 +115,23 @@
         </div>
     </header>
 	
-    <form class="form_book">
+    <div class="form_book">
 	<label>Book List:</label>
 	<br>
         <ul>
             <li class="curr_book" th:each="book : ${books}" th:text="${book}">
                 <form method="POST" th:action="@{'/'+ ${book_list}}">
-                    <a th:href="@{'/book/' + ${book.id}}">
                         <label>Book title:</label>
                         <label th:text="${book.name}" class="book-title">title</label>
                          <br>
                         <label>Authors:</label>
                         <label th:text="${book.authors}">author</label>
-                    </a>
+                    <br>
+                    <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Check">
                 </form>
 				<br>
             </li>
         </ul>
-    </form>
+    </div>
 </body>
 </html>

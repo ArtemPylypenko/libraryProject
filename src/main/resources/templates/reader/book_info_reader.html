@@ -126,19 +126,18 @@
                 <label th:text="${book.authors}"></label>
                 <br>
 				<label>Publishing house:</label>
-                <label th:text="${book.publication}"></label>
+                <label th:text="${book.given_by}"></label>
                 <br>
 				<label>Year of publication:</label>
-                <label th:text="${book.givenBy}"></label>
+                <label th:text="${book.publication}"></label>
                 <br>
 				<label>ISBN:</label>
                 <label th:text="${book.isbn}"></label>
                 <br>
-				<label>Number of free copies:</label>
-                <label th:text="${book.available}"></label>
-                <br>			   
+                <label>Rating:</label>
+                <label th:text="${book.rating}"></label>
+                <br>
                 <input class="btn btn-lg btn-primary btn-block" id="takeBookButton" type="submit" value="Take a Book">
-            <br>
         </form>
 </body>
 </html>
