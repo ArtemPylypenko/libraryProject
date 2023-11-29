@@ -64,6 +64,7 @@
             margin-bottom: 5px;
             color: #555;
 
+
         }
 
         ul {
@@ -77,6 +78,7 @@
             font-size: 1.5rem;
             margin-bottom: 25px;
             color: #555;
+
         }
 
         .curr_book {
@@ -122,6 +124,9 @@
         }
 
 
+
+
+
     </style>
 
 </head>
@@ -146,12 +151,14 @@
 <ul>
     <li class="curr_book" th:each="librarian : ${librarians}">
         <form method="get" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
-            <label th:text="${librarian.email}" class="book-title">title</label>
+            <label th:text="${librarian.email}" class="book-title"></label>
             <br>
             <input type="submit" value="Edit">
         </form>
     </li>
 </ul>
+    <br>
+    <br>
 <form  method="get" th:action="@{'/librarian/add'}">
     <input class="btn btn-lg btn-primary" type="submit" id="addLibrarianButton" value="Add">
 </form>

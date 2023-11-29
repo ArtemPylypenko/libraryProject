@@ -122,10 +122,10 @@
             <li class="curr_book" th:each="book : ${books}">
                 <form method="POST" th:action="@{'/'+ ${book_list}}">
                         <label>Book title:</label>
-                        <label th:text="${book.name}" class="book-title">title</label>
+                        <label th:text="${book.name}" class="book-title"></label>
                          <br>
                         <label>Authors:</label>
-                        <label th:text="${book.authors}">author</label>
+                        <label th:text="${book.authors}"></label>
                     <br>
                     <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Check">
                 </form>

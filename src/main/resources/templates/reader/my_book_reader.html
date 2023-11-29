@@ -179,12 +179,12 @@
             <li class="curr_book" th:each="book : ${books}">
                 <form method="POST" th:action="@{'/'+ ${books}}">
 
-                    <label class="date-label" th:text="${book.given_by}">time</label>
+                    <label class="date-label" th:text="${book.given_by}"></label>
                     <label>Book title:</label>
-                    <label th:text="${book.name}" class="book-title">title</label>
+                    <label th:text="${book.name}" class="book-title"></label>
                      <br>
                     <label>Authors:</label>
-                    <label th:text="${book.authors}">author</label>
+                    <label th:text="${book.authors}"></label>
 
                     <br>
                     <label for="rating">Rating:</label>
