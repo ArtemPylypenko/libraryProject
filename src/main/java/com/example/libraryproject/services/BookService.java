@@ -37,6 +37,10 @@ public class BookService implements ClassicalDao<Book> {
         return bookRepo.findById(id);
     }
 
+    public void deleteById(Long id) {
+        delete(getById(id).get());
+    }
+
     public void updateById(String name, String authors, int publication, String isbn, String given_by, Long id) {
         bookRepo.updateBook(name, authors, publication, isbn, given_by, id);
     }

@@ -32,6 +32,10 @@ public class ReaderService implements ClassicalDao<Reader> {
         userService.deleteByEmail(email);
     }
 
+    public void deleteById(Long id) {
+        delete(getById(id).get());
+    }
+
     @Override
     public List<Reader> getAll() {
         return StreamSupport.stream(readerRepo.findAll().spliterator(), false).collect(Collectors.toList());
@@ -43,5 +47,9 @@ public class ReaderService implements ClassicalDao<Reader> {
 
     public Optional<Reader> getById(Long id) {
         return readerRepo.findById(id);
+    }
+
+    public void update(String email, String password, String name, String surname, String phone, String placeToLive, Long id) {
+        readerRepo.update(email, password, name, surname, phone, placeToLive, id);
     }
 }

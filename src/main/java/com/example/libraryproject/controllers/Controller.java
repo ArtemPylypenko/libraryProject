@@ -190,6 +190,14 @@ public class Controller {
         return new RedirectView("/librarian");
     }
 
+    @PostMapping("book/delete/{id}")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public RedirectView deleteBook(@PathVariable("id") Long id, RedirectAttributes attributes) {
+        attributes.addFlashAttribute(SUCCESS, "book deleted!");
+        bookService.deleteById(id);
+        return new RedirectView("/librarian");
+    }
+
 
     @GetMapping("reader/add")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
