@@ -128,7 +128,7 @@
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        #addLibrarianButton{
+        #addLibrarianButton {
             background-color: #7DC96A;
             color: white;
             border: 1px solid #3498db;
@@ -153,7 +153,7 @@
 
 <body class="text-center">
 <header>
-    <a th:href="@{/home_page}">
+    <a th:href="@{/admin}">
         <h1>Library "Flower" </h1>
     </a>
     <div class="user-actions">
@@ -163,23 +163,23 @@
 
     </div>
 </header>
-
-
-
-<form class="form_book" method="POST" th:action="@{/libririan/add}">
-    <label>Libririan List:</label>
+<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+<div class="form_book">
+<label>Libririan List:</label>
 <br>
 <ul>
     <li class="curr_book" th:each="librarian : ${librarians}">
-        <form method="GET" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
+        <form method="get" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
             <label th:text="${librarian.email}" class="book-title">title</label>
             <br>
             <input type="submit" value="Edit">
         </form>
     </li>
 </ul>
-
-    <input class="btn btn-lg btn-primary" type="submit" id="addLibrarianButton" name="addLibrarian_btn" value="Add">
+<form  method="get" th:action="@{'/librarian/add'}">
+    <input class="btn btn-lg btn-primary" type="submit" id="addLibrarianButton" value="Add">
 </form>
+</div>
 </body>
 </html>
