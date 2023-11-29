@@ -103,7 +103,7 @@
 
 <body class="text-center">
 <header>
-    <a th:href="@{/home_page}">
+    <a th:href="@{/librarian}">
         <h1>Library "Flower" </h1>
     </a>
     <div class="user-actions">
@@ -116,24 +116,34 @@
 <div class="form_book">
 <form  method="POST" th:action="@{'/editReader/' + ${reader.id}}">
     <label for="email">email:</label>
-    <input th:value="${reader.email}" name="email" type="text" id="email">
+    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.email}" name="email" type="text" id="email">
     <br>
     <label for="password">password:</label>
-    <input th:value="${reader.password}"  name="password" type="text" id="password">
+    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.password}"  name="password" type="text" id="password">
     <br>
     <label for="name">Name:</label>
-    <input th:value="${reader.name}"  name="name" type="text" id="name">
+    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.name}"  name="name" type="text" id="name">
     <br>
     <label for="surname">Surname:</label>
-    <input th:value="${reader.surname}"  name="surname" type="text" id="surname">
+    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.surname}"  name="surname" type="text" id="surname">
     <br>
     <label for="phone">Phone:</label>
-    <input  th:value="${reader.phone}" name="phone" type="text" id="phone">
+    <input maxlength="15" oninput="validateInput(this)"  th:value="${reader.phone}" name="phone" type="text" id="phone">
     <br>
     <label for="place_to_live">Place to live:</label>
-    <input th:value="${reader.place_to_live}" name="place_to_live" type="text" id="place_to_live">
+    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.place_to_live}" name="place_to_live" type="text" id="place_to_live">
     <br>
     <br>
+    <script>
+        function validateInput(inputField) {
+            var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@]+$/; //  букви, цифри та пробіли
+
+            if (!allowedChars.test(inputField.value)) {
+                alert("Використовуйте букви, цифри та пробіли та @ ");
+                inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@]/g, '');
+            }
+        }
+    </script>
     <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Edit">
 </form>
 

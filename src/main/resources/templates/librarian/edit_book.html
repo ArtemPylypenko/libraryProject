@@ -102,7 +102,7 @@
 
 <body class="text-center">
 <header>
-    <a th:href="@{/home_page}">
+    <a th:href="@{/librarian}">
         <h1>Library "Flower" </h1>
     </a>
     <div class="user-actions">
@@ -114,23 +114,42 @@
 <div class="form_book">
     <form method="POST" th:action="@{'/book/edit/' + ${book.getId()}}">
         <label for="title">Book title:</label>
-        <input th:value="${book.name}" name="title" type="text" id="title">
+        <input maxlength="25" oninput="validateInput(this)" oninput="validateInput(this)" th:value="${book.name}" name="title" type="text" id="title">
         <br>
         <label for="author">Authors:</label>
-        <input th:value="${book.authors}" name="author" type="text" id="author">
+        <input maxlength="25" oninput="validateInput(this)" oninput="validateInput(this)" th:value="${book.authors}" name="author" type="text" id="author">
         <br>
         <label for="given_by">Publishing house:</label>
-        <input th:value="${book.givenBy}" name="given_by" type="text" id="given_by">
+        <input maxlength="25" oninput="validateInput(this)" oninput="validateInput(this)" th:value="${book.givenBy}" name="given_by" type="text" id="given_by">
         <br>
         <label for="publication">Year of publication:</label>
-        <input th:value="${book.publication}" name="publication" type="text" id="publication">
+        <input maxlength="15" oninput="validateInput(this)" oninput="validateInput(this)" th:value="${book.publication}" name="publication" type="text" id="publication">
         <br>
         <label for="isbn">ISBN:</label>
-        <input th:value="${book.isbn}" name="isbn" type="text" id="isbn">
+        <input maxlength="15" oninput="validateInput(this)" oninput="validateInput(this)" th:value="${book.isbn}" name="isbn" type="text" id="isbn">
         <br>
+        <script>
+            function validateInput(inputField) {
+                var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s]+$/; //  букви, цифри та пробіли
+
+                if (!allowedChars.test(inputField.value)) {
+                    alert("Використовуйте букви, цифри та пробіли ");
+                    inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s]/g, '');
+                }
+            }
+        </script>
         <br>
         <input class="btn btn-lg btn-primary" type="submit" id="editButton" name="return_btn" value="Edit">
+        <script>
+            function validateInput(inputField) {
+                var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@]+$/; //  букви, цифри та пробіли
 
+                if (!allowedChars.test(inputField.value)) {
+                    alert("Використовуйте букви, цифри та пробіли та @ ");
+                    inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@]/g, '');
+                }
+            }
+        </script>
     </form>
 
     <form method="POST" th:action="@{'/book/delete/' + ${book.id}}">
