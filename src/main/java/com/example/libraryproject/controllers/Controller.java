@@ -68,6 +68,10 @@ public class Controller {
     @PostMapping("/librarian/add")
     @PreAuthorize("hasAuthority('ADMIN')")
     public RedirectView addLibrarian(@RequestParam("email") String email, @RequestParam String password, RedirectAttributes attributes) {
+        if (Objects.equals(email, "") || Objects.equals(password, "")) {
+            attributes.addFlashAttribute(ERROR, "U should avoid empty fields!");
+            return new RedirectView("/admin");
+        }
         if (!librarianService.existByEmail(email)) {
             Librarian librarian = new Librarian();
             librarian.setRole(Role.LIBRARIAN);
