@@ -31,32 +31,20 @@ public class Controller {
     private final UserService userService;
     private final ReaderService readerService;
     private final LibrarianService librarianService;
-
-
     private final PasswordEncoder passwordEncoder;
 
+    private static final String SUCCESS = "success";
+    private static final String ERROR = "error";
+
     @GetMapping("/afterLogin")
-    public RedirectView afterLogin(RedirectAttributes attributes) {
-        attributes.addFlashAttribute("message", "Ласкаво просимо! Ви успішно авторизувалися.");
-        String role = getLoggedUserRole();
+    public RedirectView afterLogin() {
+        Role role = Role.valueOf(getLoggedUserRole());
         return switch (role) {
-            case "ADMIN" -> new RedirectView("/admin");
-            case "READER" -> new RedirectView("/reader");
-            case "LIBRARIAN" -> new RedirectView("/librarian");
-            default -> new RedirectView("/home");
+            case ADMIN -> new RedirectView("/admin");
+            case READER -> new RedirectView("/reader");
+            case LIBRARIAN -> new RedirectView("/librarian");
         };
     }
-
-
-//    @PostMapping("/reader/save")
-//    public ResponseEntity<Object> saveUser(@RequestBody UserDto userDto) {
-//        userDto.password = passwordEncoder.encode(userDto.password);
-//        Reader reader = new Reader();
-//        reader.setEmail(userDto.email);
-//        reader.setPassword(userDto.password);
-//        return userRepo.existsById(reader.getId()) ? ResponseEntity.ok("User was saved") : ResponseEntity.status(404).body("Can t save user");
-//    }
-
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -67,7 +55,7 @@ public class Controller {
 
     @GetMapping("/librarian/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String getAddLibrarianPAge(Model model) {
+    public String getAddLibrarianPAge() {
         return "admin/new_librarian";
     }
 
@@ -80,9 +68,9 @@ public class Controller {
             librarian.setPassword(password);
             librarian.setEmail(email);
             librarianService.save(librarian);
-            attributes.addFlashAttribute("success", "Librarian added!");
+            attributes.addFlashAttribute(SUCCESS, "Librarian added!");
         } else {
-            attributes.addFlashAttribute("error", "Librarian with such email already exist!");
+            attributes.addFlashAttribute(ERROR, "Librarian with such email already exist!");
         }
         return new RedirectView("/admin");
     }
@@ -98,15 +86,15 @@ public class Controller {
     @PreAuthorize("hasAuthority('ADMIN')")
     public RedirectView editLibrarian(@RequestParam("email") String email, @RequestParam("password") String password, @PathVariable(value = "id") Long id, RedirectAttributes attributes) {
         if (Objects.equals(email, "") || Objects.equals(password, "")) {
-            attributes.addFlashAttribute("error", "U should avoid empty fields!");
+            attributes.addFlashAttribute(ERROR, "U should avoid empty fields!");
             return new RedirectView("/admin");
         }
         if (librarianService.existByEmail(email)) {
-            attributes.addFlashAttribute("error", "Such email already exist!");
+            attributes.addFlashAttribute(ERROR, "Such email already exist!");
             return new RedirectView("/admin");
         }
         librarianService.updateById(email, password, id);
-        attributes.addFlashAttribute("success", "Edited successfully");
+        attributes.addFlashAttribute(SUCCESS, "Edited successfully");
 
         return new RedirectView("/admin");
     }
@@ -116,7 +104,7 @@ public class Controller {
     public RedirectView editLibrarian(@PathVariable(value = "id") Long id, RedirectAttributes attributes) {
 
         librarianService.deleteById(id);
-        attributes.addFlashAttribute("success", "Deleted successfully");
+        attributes.addFlashAttribute(SUCCESS, "Deleted successfully");
 
         return new RedirectView("/admin");
     }
@@ -127,9 +115,7 @@ public class Controller {
     public String readerPage() {
 
         Optional<Reader> reader = readerService.findByEmail("reader1@gmail.com");
-        if (reader.isPresent()) {
-            readerService.delete(reader.get());
-        }
+        reader.ifPresent(readerService::delete);
 
         return "Hello reader";
     }
