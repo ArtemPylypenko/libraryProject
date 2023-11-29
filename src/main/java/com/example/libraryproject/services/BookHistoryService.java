@@ -1,28 +1,23 @@
 package com.example.libraryproject.services;
 
 import com.example.libraryproject.entity.Book;
-import com.example.libraryproject.entity.BookHistory;
 import com.example.libraryproject.entity.Reader;
 import com.example.libraryproject.repo.BookHistoryRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 public class BookHistoryService {
     private final BookHistoryRepo bookHistoryRepo;
     private final BookService bookService;
+    private final ReaderService readerService;
 
     public boolean existsByBookAndUser(Long book, Long user) {
         return bookHistoryRepo.existsBookUser(book, user).isPresent();
     }
 
-    public void deleteAllByBook(Book book) {
-
-    }
 
     @Transactional
     public void addReaderBook(Reader reader, Book book) {
@@ -31,6 +26,11 @@ public class BookHistoryService {
         book.getReaders().add(reader);
 
 //        bookHistoryRepo.save(bookHistory);
+    }
+
+    public void updateReturnTime(Long book, Long reader) {
+
+        bookHistoryRepo.updateReturnTime(bookService.getById(book).get(), readerService.getById(reader).get());
     }
 
     @Transactional

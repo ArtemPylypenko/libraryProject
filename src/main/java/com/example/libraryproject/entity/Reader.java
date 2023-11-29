@@ -41,4 +41,9 @@ public class Reader extends User {
     public int hashCode() {
         return Objects.hash(name, surname, phone);
     }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+        book.getReaders().remove(this);
+    }
 }

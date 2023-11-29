@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface BookHistoryRepo extends CrudRepository<BookHistory, Long> {
@@ -25,5 +26,10 @@ public interface BookHistoryRepo extends CrudRepository<BookHistory, Long> {
     @Transactional
     @Query("DELETE FROM BookHistory bh WHERE bh.reader = :reader")
     void deleteByReader(Reader reader);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE BookHistory bh SET bh.updatedAt = CURRENT_TIMESTAMP  WHERE bh.book = :book and bh.reader = :reader")
+    void updateReturnTime(Book book, Reader reader);
 
 }

@@ -304,6 +304,25 @@ public class Controller {
         return new RedirectView("/reader");
     }
 
+    @GetMapping("/readerBooks")
+    @PreAuthorize("hasAuthority('READER')")
+    public String myBooks(Model model) {
+        model.addAttribute("books", readerService.getById(getLoggedReaderId()).get().getBooks());
+        return "reader/my_book_reader";
+    }
+
+    @PostMapping("/bookReturn/{id}")
+    @PreAuthorize("hasAuthority('READER')")
+    public RedirectView myBooks(@PathVariable("id") Long id, @RequestParam("rating") Double rating) {
+        Reader reader = readerService.getById(getLoggedReaderId()).get();
+        Book book = bookService.getById(id).get();
+        reader.removeBook(book);
+        book.removeReader(reader);
+
+        historyService.updateReturnTime(id, getLoggedReaderId());
+        return new RedirectView("/reader");
+    }
+
 
     // ==== HELP ====
     //

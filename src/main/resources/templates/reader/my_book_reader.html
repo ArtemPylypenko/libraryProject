@@ -177,9 +177,7 @@
         <br>
         <ul>
             <li class="curr_book" th:each="book : ${books}">
-                <form method="POST" th:action="@{'/'+ ${books}}">
-
-                    <label class="date-label" th:text="${book.given_by}"></label>
+                <form method="POST" th:action="@{'/bookReturn/'+ ${book.getId()}}">
                     <label>Book title:</label>
                     <label th:text="${book.name}" class="book-title"></label>
                      <br>

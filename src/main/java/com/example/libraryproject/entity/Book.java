@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,7 +15,6 @@ import java.util.Set;
 @Table(name = "books")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ToString
 public class Book extends BaseEntity {
 
     @Column(name = "name")
@@ -46,5 +44,15 @@ public class Book extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(authors, name, givenBy);
+    }
+
+    @Override
+    public String toString() {
+        return "boooooooooooook";
+    }
+
+    public void removeReader(Reader reader) {
+        readers.remove(reader);
+        reader.getBooks().remove(this);
     }
 }
