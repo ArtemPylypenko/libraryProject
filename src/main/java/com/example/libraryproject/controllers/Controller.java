@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @EnableWebMvc
 @org.springframework.stereotype.Controller
@@ -259,15 +258,27 @@ public class Controller {
         return new RedirectView("/librarian");
     }
 
+
+    // ==== READER ====
+    //
+    //
+    //
+    // ==== READER ====
+
     @GetMapping("/reader")
     @PreAuthorize("hasAuthority('READER')")
-    public String readerPage() {
-
-        Optional<Reader> reader = readerService.findByEmail("reader1@gmail.com");
-        reader.ifPresent(readerService::delete);
-
-        return "Hello reader";
+    public String readerPage(Model model) {
+        model.addAttribute("books", bookService.getAll());
+        return "reader/book_list_reader";
     }
+
+    @GetMapping("/bookInfo/{id}")
+    @PreAuthorize("hasAuthority('READER')")
+    public String bookInfo(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("books", bookService.getAll());
+        return "reader/book_list_reader";
+    }
+
 
     // ==== HELP ====
     //

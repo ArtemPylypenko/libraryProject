@@ -35,3 +35,6 @@ build/
 
 ### OUT ###
 out/
+
+### Spring ###
+.properties
