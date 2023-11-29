@@ -119,7 +119,7 @@
 	<label>Book List:</label>
 	<br>
         <ul>
-            <li class="curr_book" th:each="book : ${books}" th:text="${book}">
+            <li class="curr_book" th:each="book : ${books}">
                 <form method="POST" th:action="@{'/'+ ${book_list}}">
                         <label>Book title:</label>
                         <label th:text="${book.name}" class="book-title">title</label>

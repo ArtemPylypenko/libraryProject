@@ -112,7 +112,7 @@
         </div>
     </header>
     <div  class="form_book" >
-    <form method="POST" th:action="@{'/editBook/' + ${book.id}}">
+    <form method="POST" th:action="@{'/book/edit'}">
         <label for="title">Book title:</label>
         <input th:value="${book.name}" name="title" type="text" id="title">
         <br>
@@ -120,7 +120,7 @@
         <input th:value="${book.authors}" name="author" type="text" id="author">
         <br>
         <label for="given_by">Publishing house:</label>
-        <input th:value="${book.given_by}" name="given_by" type="text" id="given_by">
+        <input th:value="${book.givenBy}" name="given_by" type="text" id="given_by">
         <br>
         <label for="publication">Year of publication:</label>
         <input th:value="${book.publication}" name="publication" type="text" id="publication">

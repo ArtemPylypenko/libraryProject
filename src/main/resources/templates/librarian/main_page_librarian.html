@@ -158,7 +158,7 @@
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .form_center{
+        .form_center {
             align-self: center;
         }
 
@@ -190,24 +190,23 @@
             <label>Reader List:</label>
             <br>
             <ul>
-                <li class="curr_book" th:each="reader : ${readers}" th:text="${reader}">
+                <li class="curr_book" th:each="reader : ${readers}">
                     <form method="POST" th:action="@{'/reader/add'}">
 
                         <label>Reader name:</label>
-                        <label th:text=" ${reader.name}" class="book-title">full name</label>
-                        <label th:text=" ${reader.surname}" class="book-title">full name</label>
+                        <label th:text=" ${reader.name}" class="book-title"></label>
+                        <label th:text=" ${reader.surname}" class="book-title"></label>
                         <br>
-                        <input  type="submit" name="addLibrarian_btn"
-                               value="Edit">
+                        <input type="submit" name="addLibrarian_btn" value="Edit">
                     </form>
                     <br>
                 </li>
             </ul>
             <br>
-        <form  method="get" th:action="@{'/reader/add'}">
-            <input class="btn btn-lg btn-primary" id="addReaderButton" type="submit" name="addLibrarian_btn"
-                   value="Add">
-        </form>
+            <form method="get" th:action="@{'/reader/add'}">
+                <input class="btn btn-lg btn-primary" id="addReaderButton" type="submit" name="addLibrarian_btn"
+                       value="Add">
+            </form>
 
         </div>
     </div>
@@ -218,37 +217,37 @@
             <label>Book List:</label>
             <br>
             <ul>
-                <li class="curr_book" th:each="book : ${books}" th:text="${book}">
-                    <form method="POST" th:action="@{'/book/add'}">
+                <li class="curr_book" th:each="book : ${books}">
+                    <form method="get" th:action="@{'/book/edit/' + ${book.getId()}}">
                         <label>Book title:</label>
-                        <label th:text=" ${book.name}" class="book-title">title</label>
+                        <label th:text=" ${book.name}" class="book-title"></label>
                         <br>
-                        <input  type="submit" name="addBook_btn"
-                               value="Edit">
+                        <input type="submit" value="Edit">
                     </form>
                     <br>
                 </li>
             </ul>
             <br>
 
-        <form method="get" th:action="@{'/book/add'}">
-            <input class="btn btn-lg btn-primary" type="submit" id="addBookButton" name="addLibrarian_btn" value="Add">
-        </form>
+            <form method="get" th:action="@{'/book/add'}">
+                <input class="btn btn-lg btn-primary" type="submit" id="addBookButton" name="addLibrarian_btn"
+                       value="Add">
+            </form>
         </div>
     </div>
 </div>
 
 <div class="form_center">
     <div class="form_book">
-    <ul>
-        <label>Top 5 Book:</label>
-        <li class="curr_book" th:each="book : ${books}" th:text="${book}">
+        <ul>
+            <label>Top 5 Book:</label>
+            <li class="curr_book" th:each="book : ${books}">
                 <label>Book title:</label>
                 <label th:text=" ${book.name}" class="book-title">title</label>
                 <br>
-            <br>
-        </li>
-    </ul>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 
