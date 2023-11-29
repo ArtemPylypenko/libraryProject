@@ -123,7 +123,7 @@
         <input maxlength="25" oninput="validateInput(this)" th:value="${book.givenBy}" name="given_by" type="text" id="given_by">
         <br>
         <label for="publication">Year of publication:</label>
-        <input maxlength="15" oninput="validateInput(this)" th:value="${book.publication}" name="publication" type="text" id="publication">
+        <input maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '');" th:value="${book.publication}" name="publication" type="text" id="publication">
         <br>
         <label for="isbn">ISBN:</label>
         <input maxlength="15" oninput="validateInput(this)" th:value="${book.isbn}" name="isbn" type="text" id="isbn">

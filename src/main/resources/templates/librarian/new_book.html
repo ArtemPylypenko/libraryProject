@@ -122,7 +122,7 @@
         <input maxlength="25" oninput="validateInput(this)" name="given_by" type="text" id="given_by">
         <br>
         <label for="publication">Year of publication:</label>
-        <input maxlength="25" oninput="validateInput(this)" name="publication" type="text" id="publication">
+        <input maxlength="25" oninput="this.value = this.value.replace(/[^0-9]/g, '');" name="publication" type="text" id="publication">
         <br>
         <label for="isbn">ISBN:</label>
         <input maxlength="25" oninput="validateInput(this)" name="isbn" type="text" id="isbn">
