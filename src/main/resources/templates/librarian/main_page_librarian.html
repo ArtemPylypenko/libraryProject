@@ -191,9 +191,9 @@
             <br>
             <ul>
                 <li class="curr_book" th:each="reader : ${readers}">
-                    <form method="POST" th:action="@{'/reader/edit/' + ${reader.getId()}}">
+                    <form method="GET" th:action="@{'/reader/edit/' + ${reader.getId()}}">
 
-                        <label>Reader name:</label>
+                        <label>Name:</label>
                         <label th:text=" ${reader.name}" class="book-title"></label>
                         <label th:text=" ${reader.surname}" class="book-title"></label>
                         <br>

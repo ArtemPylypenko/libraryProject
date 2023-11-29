@@ -162,14 +162,14 @@ public class Controller {
     }
 
 
-    @GetMapping("book/edit/{id}")
+    @GetMapping("/book/edit/{id}")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
     public String editBook(@PathVariable("id") Long id, Model model) {
         model.addAttribute("book", bookService.getById(id).get());
         return "librarian/edit_book";
     }
 
-    @PostMapping("book/edit/{id}")
+    @PostMapping("/book/edit/{id}")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
     public RedirectView editBook(@RequestParam("title") String name,
                                  @RequestParam("author") String authors,
@@ -190,7 +190,7 @@ public class Controller {
         return new RedirectView("/librarian");
     }
 
-    @PostMapping("book/delete/{id}")
+    @PostMapping("/book/delete/{id}")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
     public RedirectView deleteBook(@PathVariable("id") Long id, RedirectAttributes attributes) {
         attributes.addFlashAttribute(SUCCESS, "book deleted!");
@@ -199,7 +199,7 @@ public class Controller {
     }
 
 
-    @GetMapping("reader/add")
+    @GetMapping("/reader/add")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
     public String getAddReaderPage() {
         return "librarian/new_reader";
@@ -207,20 +207,57 @@ public class Controller {
 
     @PostMapping("/reader/add")
     @PreAuthorize("hasAuthority('LIBRARIAN')")
-    public RedirectView addReader(@RequestParam("author") String author,
-                                  @RequestParam("publishing_house") String publishing_house,
+    public RedirectView addReader(@RequestParam("email") String email,
+                                  @RequestParam("password") String password,
                                   @RequestParam("name") String name,
-                                  @RequestParam("isbn") String isbn) {
-        Book book = new Book();
-        book.setAuthors(author);
-        book.setName(name);
-        book.setIsbn(isbn);
-        book.setAvailable(true);
-
-        bookService.save(book);
+                                  @RequestParam("surname") String surname,
+                                  @RequestParam("phone") String phone,
+                                  @RequestParam("place_to_live") String placeToLive) {
+        Reader reader = new Reader();
+        reader.setRole(Role.READER);
+        reader.setEmail(email);
+        reader.setPassword(password);
+        reader.setName(name);
+        reader.setSurname(surname);
+        reader.setPhone(phone);
+        reader.setPlaceToLive(placeToLive);
+        readerService.save(reader);
         return new RedirectView("/librarian");
     }
 
+
+    @GetMapping("/reader/edit/{id}")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public String getEditReader(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("reader", readerService.getById(id).get());
+        return "librarian/edit_reader";
+    }
+
+    @PostMapping("/reader/edit/{id}")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public RedirectView editReader(@RequestParam("email") String email,
+                                   @RequestParam("password") String password,
+                                   @RequestParam("name") String name,
+                                   @RequestParam("surname") String surname,
+                                   @RequestParam("phone") String phone,
+                                   @RequestParam("place_to_live") String placeToLive,
+                                   @PathVariable("id") Long id,
+                                   RedirectAttributes attributes) {
+
+        readerService.update(email, password, name, surname, phone, placeToLive, id);
+        attributes.addFlashAttribute(SUCCESS, "Edited successfully");
+
+        return new RedirectView("/librarian");
+    }
+
+
+    @PostMapping("/reader/delete/{id}")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public RedirectView deleteReader(@PathVariable("id") Long id, RedirectAttributes attributes) {
+        readerService.deleteById(id);
+        attributes.addFlashAttribute(SUCCESS, "Delete successfully");
+        return new RedirectView("/librarian");
+    }
 
     @GetMapping("/reader")
     @PreAuthorize("hasAuthority('READER')")

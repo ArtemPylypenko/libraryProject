@@ -114,7 +114,7 @@
 
 </header>
 <div class="form_book">
-<form  method="POST" th:action="@{'/editReader/' + ${reader.id}}">
+<form  method="POST" th:action="@{'/reader/edit/' + ${reader.id}}">
     <label for="email">email:</label>
     <input maxlength="15" oninput="validateInput(this)" th:value="${reader.email}" name="email" type="text" id="email">
     <br>
@@ -131,7 +131,7 @@
     <input maxlength="15" oninput="validateInput(this)"  th:value="${reader.phone}" name="phone" type="text" id="phone">
     <br>
     <label for="place_to_live">Place to live:</label>
-    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.place_to_live}" name="place_to_live" type="text" id="place_to_live">
+    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.placeToLive}" name="place_to_live" type="text" id="place_to_live">
     <br>
     <br>
     <script>
