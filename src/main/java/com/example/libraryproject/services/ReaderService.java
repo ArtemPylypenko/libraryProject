@@ -1,6 +1,8 @@
 package com.example.libraryproject.services;
 
+import com.example.libraryproject.entity.BookHistory;
 import com.example.libraryproject.entity.Reader;
+import com.example.libraryproject.repo.BookHistoryRepo;
 import com.example.libraryproject.repo.ReaderRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.stream.StreamSupport;
 public class ReaderService implements ClassicalDao<Reader> {
     private final ReaderRepo readerRepo;
     private final UserService userService;
+    private final BookHistoryRepo bookHistoryRepo;
 
     @Override
     public Reader save(Reader reader) {
@@ -25,6 +28,7 @@ public class ReaderService implements ClassicalDao<Reader> {
     @Override
     public void delete(Reader reader) {
         String email = reader.getEmail();
+        bookHistoryRepo.deleteByReader(reader);
         readerRepo.deleteReaderByEmail(email);
         userService.deleteByEmail(email);
     }

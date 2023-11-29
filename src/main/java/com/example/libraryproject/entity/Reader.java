@@ -1,9 +1,14 @@
 package com.example.libraryproject.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -23,4 +28,13 @@ public class Reader extends User {
 
     @Column(name = "place_to_live")
     private String placeToLive;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    @JoinTable(
+            name = "book_history",
+            joinColumns = {@JoinColumn(name = "reader_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+    )
+    private Set<Book> books = new HashSet<>();
 }

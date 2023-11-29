@@ -19,21 +19,8 @@ public class BookHistoryService {
         return bookHistoryRepo.existsBookUser(book.getId(), user.getId()).isPresent();
     }
 
-    String giveBookUser(Book book, Reader user) {
-        if (existsByBookAndUser(book, user)) {
-            return "User already have book";
-        } else {
-            BookHistory history = new BookHistory();
-            history.setBook(book);
-            history.setUser(user);
-            history.setTakeTime(LocalDateTime.now());
-            bookHistoryRepo.save(history);
-            return "Book has been given!";
-        }
-    }
+    void deleteAllByBook(Book book){
 
-//    String returnBook(Book book, User user){
-//
-//    }
+    }
 
 }

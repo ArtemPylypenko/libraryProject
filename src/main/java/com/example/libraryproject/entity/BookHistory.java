@@ -1,13 +1,9 @@
 package com.example.libraryproject.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -16,17 +12,21 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "book_history")
 @NoArgsConstructor
-public class BookHistory extends BaseEntity{
-    @OneToOne
-    private Reader user;
+public class BookHistory extends BaseEntity {
+    @ManyToOne
+    @JoinColumn(name = "reader_id")
+    private Reader reader;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
-    @Column(nullable = false)
-    @CreatedDate
-    private LocalDateTime takeTime;
+    @Column(name = "rating")
+    private Double rating;
 
-    @Column()
-    private LocalDateTime returnTime;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
