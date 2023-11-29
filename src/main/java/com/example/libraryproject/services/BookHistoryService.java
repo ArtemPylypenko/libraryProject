@@ -24,8 +24,14 @@ public class BookHistoryService {
 
         reader.getBooks().add(book);
         book.getReaders().add(reader);
+        updateRiveTime(book.getId(), reader.getId());
 
 //        bookHistoryRepo.save(bookHistory);
+    }
+
+    public void updateRiveTime(Long book, Long reader) {
+
+        bookHistoryRepo.updateGiveTime(bookService.getById(book).get(), readerService.getById(reader).get());
     }
 
     public void updateReturnTime(Long book, Long reader) {

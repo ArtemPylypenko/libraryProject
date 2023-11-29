@@ -316,6 +316,7 @@ public class Controller {
     public RedirectView myBooks(@PathVariable("id") Long id, @RequestParam("rating") Double rating) {
         Reader reader = readerService.getById(getLoggedReaderId()).get();
         Book book = bookService.getById(id).get();
+        book.setAvailable(true);
         reader.removeBook(book);
         book.removeReader(reader);
 
