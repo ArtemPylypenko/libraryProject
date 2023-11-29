@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +8,6 @@
     <title>Library "Flower"</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Reader/my_book_reader/my_book_reader.css" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -182,7 +181,7 @@
         <ul>
             <li class="curr_book" th:each="book : ${books}" th:text="${book}">
                 <form method="POST" th:action="@{'/'+ ${book_list}}">
-                    <a th:href="@{'/book/' + ${book.id}}}">
+                    <a th:href="@{'/book/' + ${book.id}}">
                     <label class="date-label" th:text="${book.given_by}">time</label>
                     <label>Book title:</label>
                     <label th:text="${book.name}" class="book-title">title</label>

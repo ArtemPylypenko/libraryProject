@@ -109,6 +109,15 @@ public class Controller {
         return new RedirectView("/admin");
     }
 
+    @GetMapping("/librarian")
+    @PreAuthorize("hasAuthority('LIBRARIAN')")
+    public String librarianPage(Model model) {
+
+        Optional<Reader> reader = readerService.findByEmail("reader1@gmail.com");
+        reader.ifPresent(readerService::delete);
+
+        return "librarian/main_page_librarian";
+    }
 
     @GetMapping("/reader")
     @PreAuthorize("hasAuthority('READER')")
