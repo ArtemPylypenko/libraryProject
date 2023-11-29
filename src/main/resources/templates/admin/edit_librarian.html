@@ -123,7 +123,7 @@
     <input class="btn btn-lg btn-primary" type="submit" id="editLibrarianButton" name="editLibrarian_btn" value="Edit">
 
 </form>
-<form class="form_book" method="POST" th:action="@{'/editLibrarian/' + ${librarian.id}}">
+<form class="form_book" method="POST" th:action="@{'/librarian/delete/' + ${librarian.id}}">
     <input class="btn btn-lg btn-primary" type="submit" id="deleteLibrarianButton" name="deleteLibrarian_btn"
            value="Delete">
 </form>

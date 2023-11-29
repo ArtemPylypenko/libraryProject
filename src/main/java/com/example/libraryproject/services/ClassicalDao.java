@@ -7,5 +7,5 @@ public interface ClassicalDao<T> {
 
     public void delete(T t);
 
-    public List<T> getAll(T t);
+    public List<T> getAll();
 }

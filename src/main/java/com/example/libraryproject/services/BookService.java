@@ -25,7 +25,7 @@ public class BookService implements ClassicalDao<Book> {
     }
 
     @Override
-    public List<Book> getAll(Book book) {
+    public List<Book> getAll() {
         return StreamSupport.stream(bookRepo.findAll().spliterator(), false).collect(Collectors.toList());
     }
 }

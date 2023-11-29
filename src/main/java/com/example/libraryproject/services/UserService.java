@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -39,8 +38,8 @@ public class UserService implements ClassicalDao<UserAuth> {
     }
 
     @Override
-    public List<UserAuth> getAll(UserAuth user) {
-        return StreamSupport.stream(userRepo.findAll().spliterator(), false).collect(Collectors.toList());
+    public List<UserAuth> getAll() {
+        return StreamSupport.stream(userRepo.findAll().spliterator(), false).toList();
     }
 
     public Optional<UserAuth> findByEmail(String email) {

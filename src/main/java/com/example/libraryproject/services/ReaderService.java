@@ -32,7 +32,7 @@ public class ReaderService implements ClassicalDao<Reader> {
     }
 
     @Override
-    public List<Reader> getAll(Reader reader) {
+    public List<Reader> getAll() {
         return StreamSupport.stream(readerRepo.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
