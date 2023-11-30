@@ -1,7 +1,6 @@
 package com.example.libraryproject.repo;
 
 import com.example.libraryproject.entity.Reader;
-import com.example.libraryproject.entity.UserAuth;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +11,7 @@ import java.util.Optional;
 public interface ReaderRepo extends CrudRepository<Reader, Long> {
     @Query(value = "select * from readers where email = ?1", nativeQuery = true)
     Optional<Reader> findByEmail(String email);
+
     @Transactional
     @Modifying
     @Query(value = "delete from readers where email = ?1", nativeQuery = true)
@@ -19,6 +19,11 @@ public interface ReaderRepo extends CrudRepository<Reader, Long> {
 
     @Override
     Optional<Reader> findById(Long aLong);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Reader l SET l.email = :email, l.password = :password WHERE l.id = :id")
+    void updateReaderEmailAndPasswordById(String email, String password, Long id);
 
     @Transactional
     @Modifying

@@ -38,6 +38,9 @@ public class BookHistoryService {
 
         bookHistoryRepo.updateReturnTime(bookService.getById(book).get(), readerService.getById(reader).get());
     }
+    public Double getAVGBookRating(Book book){
+        return bookHistoryRepo.getAvgRating(book);
+    }
 
     @Transactional
     public void deleteUserBooksByBook(Book book) {

@@ -37,4 +37,7 @@ public interface BookHistoryRepo extends CrudRepository<BookHistory, Long> {
     @Query("UPDATE BookHistory bh SET bh.createdAt = CURRENT_TIMESTAMP  WHERE bh.book = :book and bh.reader = :reader")
     void updateGiveTime(Book book, Reader reader);
 
+
+    @Query("SELECT AVG(e.rating) FROM BookHistory e where e.book = :book")
+    Double getAvgRating(Book book);
 }

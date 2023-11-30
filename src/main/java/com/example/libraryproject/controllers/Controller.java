@@ -99,6 +99,7 @@ public class Controller {
             attributes.addFlashAttribute(ERROR, "U should avoid empty fields!");
             return new RedirectView("/admin");
         }
+
         if (librarianService.existByEmail(email)) {
             if (email.equals(librarianService.getById(id).get().getEmail())) {
                 librarianService.updateById(email, password, id);
@@ -218,7 +219,17 @@ public class Controller {
                                   @RequestParam("name") String name,
                                   @RequestParam("surname") String surname,
                                   @RequestParam("phone") String phone,
-                                  @RequestParam("place_to_live") String placeToLive) {
+                                  @RequestParam("place_to_live") String placeToLive,
+                                  RedirectAttributes attributes) {
+        if (email.equals("") || password.equals("") || name.equals("") || surname.equals("") || phone.equals("") || placeToLive.equals("")) {
+            attributes.addFlashAttribute(ERROR, "Avoid empty fields");
+            return new RedirectView("/librarian");
+        }
+        if (readerService.existByEmail(email)) {
+            attributes.addFlashAttribute(ERROR, "Reader with such email exist!");
+            return new RedirectView("/librarian");
+        }
+
         Reader reader = new Reader();
         reader.setRole(Role.READER);
         reader.setEmail(email);
@@ -228,6 +239,7 @@ public class Controller {
         reader.setPhone(phone);
         reader.setPlaceToLive(placeToLive);
         readerService.save(reader);
+        attributes.addFlashAttribute(SUCCESS, "Edited successfully");
         return new RedirectView("/librarian");
     }
 
@@ -250,6 +262,14 @@ public class Controller {
                                    @PathVariable("id") Long id,
                                    RedirectAttributes attributes) {
 
+        if (email.equals("") || password.equals("") || name.equals("") || surname.equals("") || phone.equals("") || placeToLive.equals("")) {
+            attributes.addFlashAttribute(ERROR, "Avoid empty fields");
+            return new RedirectView("/librarian");
+        }
+        if (readerService.existByEmail(email) && !readerService.getByEmail(email).get().getPassword().equals(password)) {
+            attributes.addFlashAttribute(ERROR, "Reader with such email exist!");
+            return new RedirectView("/librarian");
+        }
         readerService.update(email, password, name, surname, phone, placeToLive, id);
         attributes.addFlashAttribute(SUCCESS, "Edited successfully");
 
@@ -282,7 +302,10 @@ public class Controller {
     @GetMapping("/bookInfo/{id}")
     @PreAuthorize("hasAuthority('READER')")
     public String bookInfo(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("book", bookService.getById(id).get());
+        Book book = bookService.getById(id).get();
+        book.setRating(historyService.getAVGBookRating(book));
+
+        model.addAttribute("book", book);
         return "reader/book_info_reader";
     }
 
@@ -307,7 +330,8 @@ public class Controller {
     @GetMapping("/readerBooks")
     @PreAuthorize("hasAuthority('READER')")
     public String myBooks(Model model) {
-        model.addAttribute("books", readerService.getById(getLoggedReaderId()).get().getBooks());
+        model.addAttribute("books", readerService.getById(getLoggedReaderId()).get().getBooks().stream().filter(book ->
+                !book.isAvailable()));
         return "reader/my_book_reader";
     }
 
@@ -316,7 +340,8 @@ public class Controller {
     public RedirectView myBooks(@PathVariable("id") Long id, @RequestParam("rating") Double rating) {
         Reader reader = readerService.getById(getLoggedReaderId()).get();
         Book book = bookService.getById(id).get();
-        book.setAvailable(true);
+        bookService.updateAvailable(true, id);
+
         reader.removeBook(book);
         book.removeReader(reader);
 

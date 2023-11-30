@@ -16,4 +16,9 @@ public interface UserRepo extends CrudRepository<UserAuth, Long> {
     @Modifying
     @Query(value = "delete from users where email = ?1", nativeQuery = true)
     public void deleteUserAuthByEmail(String email);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE UserAuth u SET u.email = :newEmail, u.password = :newPassword WHERE u.email = :email")
+    void updateByEmail(String email, String newEmail, String newPassword);
 }

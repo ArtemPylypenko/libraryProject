@@ -54,6 +54,20 @@ public class ReaderService implements ClassicalDao<Reader> {
     }
 
     public void update(String email, String password, String name, String surname, String phone, String placeToLive, Long id) {
+        String oldEmail = readerRepo.findById(id).get().getEmail();
+        userService.updateByOldEmail(oldEmail, email, password);
+
         readerRepo.update(email, password, name, surname, phone, placeToLive, id);
+    }
+
+//    public void updateById(String email, String password, String name, String surname, String phone, String placeToLive, Long id) {
+//        String oldEmail = readerRepo.findById(id).get().getEmail();
+//        userService.updateByOldEmail(oldEmail, email, password);
+//
+//        readerRepo.updateReaderEmailAndPasswordById(email, password, id);
+//    }
+
+    public boolean existByEmail(String email) {
+        return readerRepo.findByEmail(email).isPresent();
     }
 }

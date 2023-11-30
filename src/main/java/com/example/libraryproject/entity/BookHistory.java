@@ -25,7 +25,7 @@ public class BookHistory extends BaseEntity {
     private Book book;
 
     @Column(name = "rating")
-    private Double rating;
+    private Double rating = 3D;
 
     @CreatedDate
     @Column(name = "created_at")

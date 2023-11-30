@@ -45,4 +45,8 @@ public class UserService implements ClassicalDao<UserAuth> {
     public Optional<UserAuth> findByEmail(String email) {
         return userRepo.findByEmail(email);
     }
+
+    public void updateByOldEmail(String old, String email, String password) {
+        userRepo.updateByEmail(old, email, password);
+    }
 }

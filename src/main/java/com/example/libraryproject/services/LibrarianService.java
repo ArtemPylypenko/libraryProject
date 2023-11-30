@@ -52,6 +52,9 @@ public class LibrarianService implements ClassicalDao<Librarian> {
     }
 
     public void updateById(String email, String password, Long id) {
+        String oldEmail = librarianRepo.findById(id).get().getEmail();
+        userService.updateByOldEmail(oldEmail, email, password);
+
         librarianRepo.updateLibrarianEmailAndPasswordById(email, password, id);
     }
 
