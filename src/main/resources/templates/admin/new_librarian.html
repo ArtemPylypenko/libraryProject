@@ -114,10 +114,10 @@
 <div class="form_book">
 <form  method="POST" th:action="@{'/librarian/add'}">
     <label for="email">Mail:</label>
-    <input oninput="validateInput(this)"  maxlength="15" name="email" type="text" id="email">
+    <input oninput="validateInput(this)"  maxlength="30" name="email" type="text" id="email">
     <br>
     <label for="password">Password:</label>
-    <input oninput="validateInput(this)"  maxlength="15" name="password" type="text" id="password">
+    <input oninput="validateInput(this)"  maxlength="30" name="password" type="text" id="password">
     <br>
     <script>
         function validateInput(inputField) {

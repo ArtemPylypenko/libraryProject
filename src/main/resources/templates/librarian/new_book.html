@@ -113,27 +113,27 @@
     </header>
     <form class="form_book" method="POST" th:action="@{'/book/add'}">
         <label for="name">Title:</label>
-        <input maxlength="25" oninput="validateInput(this)" name="name" type="text" id="name">
+        <input maxlength="30" oninput="validateInput(this)" name="name" type="text" id="name">
         <br>
         <label for="authors">Authors:</label>
-        <input maxlength="25" oninput="validateInput(this)" name="authors" type="text" id="authors">
+        <input maxlength="30" oninput="validateInput(this)" name="authors" type="text" id="authors">
         <br>
         <label for="given_by">Publishing house:</label>
-        <input maxlength="25" oninput="validateInput(this)" name="given_by" type="text" id="given_by">
+        <input maxlength="30" oninput="validateInput(this)" name="given_by" type="text" id="given_by">
         <br>
         <label for="publication">Year of publication:</label>
-        <input maxlength="25" oninput="this.value = this.value.replace(/[^0-9]/g, '');" name="publication" type="text" id="publication">
+        <input maxlength="30" oninput="this.value = this.value.replace(/[^0-9]/g, '');" name="publication" type="text" id="publication">
         <br>
         <label for="isbn">ISBN:</label>
-        <input maxlength="25" oninput="validateInput(this)" name="isbn" type="text" id="isbn">
+        <input maxlength="30" oninput="validateInput(this)" name="isbn" type="text" id="isbn">
         <br>
         <script>
             function validateInput(inputField) {
-                var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@]+$/; //  букви, цифри та пробіли
+                var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@.]+$/; //  букви, цифри та пробіли
 
                 if (!allowedChars.test(inputField.value)) {
                     alert("Використовуйте букви, цифри та пробіли та @ ");
-                    inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@]/g, '');
+                    inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@.]/g, '');
                 }
             }
         </script>

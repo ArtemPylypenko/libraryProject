@@ -116,31 +116,31 @@
 <div class="form_book">
 <form  method="POST" th:action="@{'/reader/edit/' + ${reader.id}}">
     <label for="email">email:</label>
-    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.email}" name="email" type="text" id="email">
+    <input maxlength="30" oninput="validateInput(this)" th:value="${reader.email}" name="email" type="text" id="email">
     <br>
     <label for="password">password:</label>
-    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.password}"  name="password" type="text" id="password">
+    <input maxlength="30" oninput="validateInput(this)" th:value="${reader.password}"  name="password" type="text" id="password">
     <br>
     <label for="name">Name:</label>
-    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.name}"  name="name" type="text" id="name">
+    <input maxlength="30" oninput="validateInput(this)" th:value="${reader.name}"  name="name" type="text" id="name">
     <br>
     <label for="surname">Surname:</label>
-    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.surname}"  name="surname" type="text" id="surname">
+    <input maxlength="30" oninput="validateInput(this)" th:value="${reader.surname}"  name="surname" type="text" id="surname">
     <br>
     <label for="phone">Phone:</label>
-    <input maxlength="15" oninput="validateInput(this)"  th:value="${reader.phone}" name="phone" type="text" id="phone">
+    <input maxlength="30" oninput="validateInput(this)"  th:value="${reader.phone}" name="phone" type="text" id="phone">
     <br>
     <label for="place_to_live">Place to live:</label>
-    <input maxlength="15" oninput="validateInput(this)" th:value="${reader.placeToLive}" name="place_to_live" type="text" id="place_to_live">
+    <input maxlength="30" oninput="validateInput(this)" th:value="${reader.placeToLive}" name="place_to_live" type="text" id="place_to_live">
     <br>
     <br>
     <script>
         function validateInput(inputField) {
-            var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@]+$/; //  букви, цифри та пробіли
+            var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@.]+$/; //  букви, цифри та пробіли
 
             if (!allowedChars.test(inputField.value)) {
                 alert("Використовуйте букви, цифри та пробіли та @ ");
-                inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@]/g, '');
+                inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@.]/g, '');
             }
         }
     </script>

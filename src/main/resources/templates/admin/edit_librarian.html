@@ -114,10 +114,10 @@
 <div class="form_book">
 <form  method="post" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
     <label for="email">Email:</label>
-    <input oninput="validateInput(this)"  maxlength="15" th:value="${librarian.email}" type="text" name="email" id="email">
+    <input oninput="validateInput(this)"  maxlength="30" th:value="${librarian.email}" type="text" name="email" id="email">
     <br>
     <label for="password">Password:</label>
-    <input oninput="validateInput(this)"  maxlength="15" th:value="${librarian.password}" type="text" name="password" id="password">
+    <input oninput="validateInput(this)"  maxlength="30" th:value="${librarian.password}" type="text" name="password" id="password">
     <br>
     <script>
         function validateInput(inputField) {
