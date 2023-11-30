@@ -139,7 +139,7 @@ public class Controller {
 
         model.addAttribute("readers", readerService.getAll());
         model.addAttribute("books", bookService.getAll().stream()
-                .sorted(Comparator.comparingDouble(Book::getRating))
+                .sorted(Comparator.comparingDouble(Book::getRating).reversed())
                 .limit(5)
                 .collect(Collectors.toList()));
 
@@ -348,8 +348,8 @@ public class Controller {
     public RedirectView myBooks(@PathVariable("id") Long id, @RequestParam("rating") Double rating) {
         Reader reader = readerService.getById(getLoggedReaderId()).get();
         Book book = bookService.getById(id).get();
-        book.setRating(rating);
         bookService.updateAvailable(true, id);
+        bookService.updateRating(rating, id);
 
         reader.removeBook(book);
         book.removeReader(reader);
