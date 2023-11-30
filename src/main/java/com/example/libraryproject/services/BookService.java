@@ -48,4 +48,10 @@ public class BookService implements ClassicalDao<Book> {
     public void updateAvailable(boolean available, Long id) {
         bookRepo.updateAvailable(available, id);
     }
+
+    public void updateRating(Double rating, Long id) {
+        Double curRate = bookRepo.findById(id).get().getRating();
+        Double newRating = curRate + (rating - curRate) / 2;
+        bookRepo.updateRating(newRating, id);
+    }
 }

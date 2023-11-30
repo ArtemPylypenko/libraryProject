@@ -36,7 +36,7 @@ public class Book extends BaseEntity {
     private boolean available;
 
     @Column(name = "rating")
-    private Double rating;
+    private Double rating = 3D;
 
     @ManyToMany(mappedBy = "books", cascade = {CascadeType.DETACH})
     private Set<Reader> readers = new HashSet<>();

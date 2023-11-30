@@ -22,4 +22,9 @@ public interface BookRepo extends CrudRepository<Book, Long> {
     @Modifying
     @Query("UPDATE Book b SET b.available = :available WHERE b.id = :id")
     void updateAvailable(boolean available, Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Book b SET b.rating = :rating WHERE b.id = :id")
+    void updateRating(Double rating, Long id);
 }

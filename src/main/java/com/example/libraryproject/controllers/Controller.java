@@ -20,7 +20,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @EnableWebMvc
 @org.springframework.stereotype.Controller
@@ -136,7 +138,10 @@ public class Controller {
     public String librarianPage(Model model) {
 
         model.addAttribute("readers", readerService.getAll());
-        model.addAttribute("books", bookService.getAll());
+        model.addAttribute("books", bookService.getAll().stream()
+                .sorted(Comparator.comparingDouble(Book::getRating))
+                .limit(5)
+                .collect(Collectors.toList()));
 
         return "librarian/main_page_librarian";
     }
@@ -153,14 +158,19 @@ public class Controller {
                                 @RequestParam("authors") String authors,
                                 @RequestParam("given_by") String given_by,
                                 @RequestParam("isbn") String isbn,
-                                @RequestParam("publication") int publication) {
-
+                                @RequestParam("publication") String publication,
+                                RedirectAttributes attributes) {
+        if (Objects.equals(name, "") || Objects.equals(authors, "") || Objects.equals(given_by, "") || Objects.equals(isbn, "")) {
+            attributes.addFlashAttribute(ERROR, "U should avoid empty fields!");
+            return new RedirectView("/librarian");
+        }
         Book book = new Book();
+
         book.setName(name);
         book.setAuthors(authors);
         book.setGivenBy(given_by);
         book.setIsbn(isbn);
-        book.setPublication(publication);
+        book.setPublication(Integer.valueOf(publication));
         book.setRating(3D);
         book.setAvailable(true);
 
@@ -303,8 +313,6 @@ public class Controller {
     @PreAuthorize("hasAuthority('READER')")
     public String bookInfo(@PathVariable("id") Long id, Model model) {
         Book book = bookService.getById(id).get();
-        book.setRating(historyService.getAVGBookRating(book));
-
         model.addAttribute("book", book);
         return "reader/book_info_reader";
     }
@@ -340,6 +348,7 @@ public class Controller {
     public RedirectView myBooks(@PathVariable("id") Long id, @RequestParam("rating") Double rating) {
         Reader reader = readerService.getById(getLoggedReaderId()).get();
         Book book = bookService.getById(id).get();
+        book.setRating(rating);
         bookService.updateAvailable(true, id);
 
         reader.removeBook(book);
