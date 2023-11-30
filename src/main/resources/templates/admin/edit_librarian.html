@@ -121,11 +121,11 @@
     <br>
     <script>
         function validateInput(inputField) {
-            var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@]+$/; //  букви, цифри та пробіли
+            var allowedChars = /^[a-zA-Z0-9а-яА-ЯёЁ\s@.]+$/; //  букви, цифри та пробіли
 
             if (!allowedChars.test(inputField.value)) {
                 alert("Використовуйте букви, цифри та пробіли та @ ");
-                inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@]/g, '');
+                inputField.value = inputField.value.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s@.]/g, '');
             }
         }
     </script>
