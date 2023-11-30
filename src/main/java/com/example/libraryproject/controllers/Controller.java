@@ -138,7 +138,8 @@ public class Controller {
     public String librarianPage(Model model) {
 
         model.addAttribute("readers", readerService.getAll());
-        model.addAttribute("books", bookService.getAll().stream()
+        model.addAttribute("books", bookService.getAll());
+        model.addAttribute("booksTop", bookService.getAll().stream()
                 .sorted(Comparator.comparingDouble(Book::getRating).reversed())
                 .limit(5)
                 .collect(Collectors.toList()));

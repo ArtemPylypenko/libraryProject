@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -30,7 +29,7 @@ public class BookService implements ClassicalDao<Book> {
 
     @Override
     public List<Book> getAll() {
-        return StreamSupport.stream(bookRepo.findAll().spliterator(), false).collect(Collectors.toList());
+        return StreamSupport.stream(bookRepo.findAll().spliterator(), false).toList();
     }
 
     public Optional<Book> getById(Long id) {
