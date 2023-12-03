@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class BookHistoryService {
+public class BookReaderService {
     private final BookReaderRepo bookHistoryRepo;
     private final BookService bookService;
     private final ReaderService readerService;

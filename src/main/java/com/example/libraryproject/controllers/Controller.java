@@ -32,7 +32,8 @@ public class Controller {
     private final ReaderService readerService;
     private final LibrarianService librarianService;
     private final BookService bookService;
-    private final BookHistoryService bookReaderService;
+    private final BookReaderService bookReaderService;
+    private final HistoryService historyService;
     private final PasswordEncoder passwordEncoder;
 
     private static final String SUCCESS = "success";
@@ -40,6 +41,7 @@ public class Controller {
 
     @GetMapping("/afterLogin")
     public RedirectView afterLogin() {
+        historyService.updateRating();
         Role role = Role.valueOf(getLoggedUserRole());
         return switch (role) {
             case ADMIN -> new RedirectView("/admin");
@@ -355,7 +357,8 @@ public class Controller {
         reader.removeBook(book);
         book.removeReader(reader);
         bookReaderService.deteleReaderBook(reader, book);
-        // historyService.updateReturnTime(id, getLoggedReaderId());
+        historyService.updateRating(rating, reader.getId(), book.getId());
+
         return new RedirectView("/reader");
     }
 
