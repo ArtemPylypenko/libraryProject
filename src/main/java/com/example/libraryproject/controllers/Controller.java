@@ -32,7 +32,7 @@ public class Controller {
     private final ReaderService readerService;
     private final LibrarianService librarianService;
     private final BookService bookService;
-    private final BookHistoryService historyService;
+    private final BookHistoryService bookReaderService;
     private final PasswordEncoder passwordEncoder;
 
     private static final String SUCCESS = "success";
@@ -323,9 +323,9 @@ public class Controller {
     public RedirectView takeBook(@PathVariable("id") Long id, RedirectAttributes attributes) {
         Long loggedReaderId = getLoggedReaderId();
         if (bookService.getById(id).get().isAvailable()) {
-            if (!historyService.existsByBookAndUser(id, loggedReaderId)) {
+            if (!bookReaderService.existsByBookAndUser(id, loggedReaderId)) {
                 attributes.addFlashAttribute(SUCCESS, "Book added to your books");
-                historyService.addReaderBook(readerService.getById(loggedReaderId).get(), bookService.getById(id).get());
+                bookReaderService.addReaderBook(readerService.getById(loggedReaderId).get(), bookService.getById(id).get());
                 bookService.updateAvailable(false, id);
             } else {
                 attributes.addFlashAttribute(ERROR, "Reader has such book!");
@@ -350,12 +350,12 @@ public class Controller {
         Reader reader = readerService.getById(getLoggedReaderId()).get();
         Book book = bookService.getById(id).get();
         bookService.updateAvailable(true, id);
-        bookService.updateRating(rating, id);
+        //bookService.updateRating(rating, id);
 
         reader.removeBook(book);
         book.removeReader(reader);
-
-        historyService.updateReturnTime(id, getLoggedReaderId());
+        bookReaderService.deteleReaderBook(reader, book);
+        // historyService.updateReturnTime(id, getLoggedReaderId());
         return new RedirectView("/reader");
     }
 

@@ -1,18 +1,22 @@
 package com.example.libraryproject.services;
 
 import com.example.libraryproject.entity.Book;
+import com.example.libraryproject.entity.History;
 import com.example.libraryproject.entity.Reader;
-import com.example.libraryproject.repo.BookHistoryRepo;
+import com.example.libraryproject.repo.BookReaderRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class BookHistoryService {
-    private final BookHistoryRepo bookHistoryRepo;
+    private final BookReaderRepo bookHistoryRepo;
     private final BookService bookService;
     private final ReaderService readerService;
+    private final HistoryService historyService;
 
     public boolean existsByBookAndUser(Long book, Long user) {
         return bookHistoryRepo.existsBookUser(book, user).isPresent();
@@ -24,13 +28,16 @@ public class BookHistoryService {
 
         reader.getBooks().add(book);
         book.getReaders().add(reader);
-        updateRiveTime(book.getId(), reader.getId());
 
+        History history = new History();
+        history.setBook(book.getId());
+        history.setReader(reader.getId());
+        history.setCreatedAt(LocalDateTime.now());
+        historyService.save(history);
 //        bookHistoryRepo.save(bookHistory);
     }
 
     public void updateRiveTime(Long book, Long reader) {
-
         bookHistoryRepo.updateGiveTime(bookService.getById(book).get(), readerService.getById(reader).get());
     }
 
@@ -38,7 +45,12 @@ public class BookHistoryService {
 
         bookHistoryRepo.updateReturnTime(bookService.getById(book).get(), readerService.getById(reader).get());
     }
-    public Double getAVGBookRating(Book book){
+
+    public void deteleReaderBook(Reader reader, Book book){
+        bookHistoryRepo.deleteReaderBook(reader,book);
+    }
+
+    public Double getAVGBookRating(Book book) {
         return bookHistoryRepo.getAvgRating(book);
     }
 

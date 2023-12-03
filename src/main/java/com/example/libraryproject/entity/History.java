@@ -1,6 +1,9 @@
 package com.example.libraryproject.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,25 +15,24 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@Table(name = "book_history")
+@Table(name = "history")
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class BookHistory extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "reader_id")
-    private Reader reader;
-
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
-
-    @Column(name = "rating")
-    private Double rating = 3D;
-
+public class History extends BaseEntity {
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "returned_at")
+    private LocalDateTime returnedAt;
+
+
+    @Column(name = "reader_id")
+    private Long reader;
+
+    @Column(name = "book_id")
+    private Long book;
+
+    @Column(name = "rating")
+    private Double rating;
 }

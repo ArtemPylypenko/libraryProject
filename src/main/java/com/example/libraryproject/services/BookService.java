@@ -1,7 +1,7 @@
 package com.example.libraryproject.services;
 
 import com.example.libraryproject.entity.Book;
-import com.example.libraryproject.repo.BookHistoryRepo;
+import com.example.libraryproject.repo.BookReaderRepo;
 import com.example.libraryproject.repo.BookRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class BookService implements ClassicalDao<Book> {
     private final BookRepo bookRepo;
-    private final BookHistoryRepo bookHistoryRepo;
+    private final BookReaderRepo bookHistoryRepo;
 
     @Override
     public Book save(Book book) {

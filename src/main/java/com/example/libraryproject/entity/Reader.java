@@ -28,10 +28,9 @@ public class Reader extends User {
     @Column(name = "place_to_live")
     private String placeToLive;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "book_history",
+            name = "book_reader",
             joinColumns = {@JoinColumn(name = "reader_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")}
     )
