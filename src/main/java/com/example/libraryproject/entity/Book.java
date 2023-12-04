@@ -55,4 +55,8 @@ public class Book extends BaseEntity {
         readers.remove(reader);
         reader.getBooks().remove(this);
     }
+
+    public void setRating(Double rating) {
+        this.rating = Math.round(rating * 10.0) / 10.0;
+    }
 }

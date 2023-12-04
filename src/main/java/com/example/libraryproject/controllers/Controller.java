@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,19 +21,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @EnableWebMvc
 @org.springframework.stereotype.Controller
 @RequiredArgsConstructor
 public class Controller {
-    private final UserService userService;
     private final ReaderService readerService;
     private final LibrarianService librarianService;
     private final BookService bookService;
     private final BookReaderService bookReaderService;
     private final HistoryService historyService;
-    private final PasswordEncoder passwordEncoder;
 
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
@@ -143,8 +139,7 @@ public class Controller {
         model.addAttribute("books", bookService.getAll());
         model.addAttribute("booksTop", bookService.getAll().stream()
                 .sorted(Comparator.comparingDouble(Book::getRating).reversed())
-                .limit(5)
-                .collect(Collectors.toList()));
+                .limit(5).toList());
 
         return "librarian/main_page_librarian";
     }
@@ -234,7 +229,7 @@ public class Controller {
                                   @RequestParam("phone") String phone,
                                   @RequestParam("place_to_live") String placeToLive,
                                   RedirectAttributes attributes) {
-        if (email.equals("") || password.equals("") || name.equals("") || surname.equals("") || phone.equals("") || placeToLive.equals("")) {
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || surname.isEmpty() || phone.isEmpty() || placeToLive.isEmpty()) {
             attributes.addFlashAttribute(ERROR, "Avoid empty fields");
             return new RedirectView("/librarian");
         }
@@ -275,7 +270,7 @@ public class Controller {
                                    @PathVariable("id") Long id,
                                    RedirectAttributes attributes) {
 
-        if (email.equals("") || password.equals("") || name.equals("") || surname.equals("") || phone.equals("") || placeToLive.equals("")) {
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || surname.isEmpty() || phone.isEmpty() || placeToLive.isEmpty()) {
             attributes.addFlashAttribute(ERROR, "Avoid empty fields");
             return new RedirectView("/librarian");
         }
@@ -356,6 +351,7 @@ public class Controller {
 
         reader.removeBook(book);
         book.removeReader(reader);
+        historyService.updateRating();
         bookReaderService.deteleReaderBook(reader, book);
         historyService.updateRating(rating, reader.getId(), book.getId());
 
