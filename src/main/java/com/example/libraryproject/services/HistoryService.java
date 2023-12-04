@@ -1,5 +1,6 @@
 package com.example.libraryproject.services;
 
+import com.example.libraryproject.dto.HistoryDTO;
 import com.example.libraryproject.entity.History;
 import com.example.libraryproject.repo.BookRepo;
 import com.example.libraryproject.repo.HistoryRepo;
@@ -7,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -67,5 +70,19 @@ public class HistoryService implements ClassicalDao<History> {
     public List<History> getHistoryBetween(LocalDateTime start, LocalDateTime end, Long reader) {
         return historyRepo.getAllByReader(reader).stream().filter(h ->
                 h.getCreatedAt().isAfter(start) && h.getCreatedAt().isBefore(end)).toList();
+    }
+
+    public List<History> getAllByReader(Long reader) {
+        return historyRepo.getAllByReader(reader);
+    }
+
+    public HistoryDTO historyToDto(History history) {
+        String name = bookRepo.findById(history.getBook()).get().getName();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd HH:mm", Locale.US);
+
+        // Перетворюємо LocalDateTime у String
+
+        return new HistoryDTO(name, history.getCreatedAt().format(formatter), history.getReturnedAt().format(formatter));
     }
 }

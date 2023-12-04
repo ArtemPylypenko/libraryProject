@@ -1,9 +1,7 @@
 package com.example.libraryproject.controllers;
 
-import com.example.libraryproject.entity.Book;
-import com.example.libraryproject.entity.Librarian;
-import com.example.libraryproject.entity.Reader;
-import com.example.libraryproject.entity.Role;
+import com.example.libraryproject.dto.HistoryDTO;
+import com.example.libraryproject.entity.*;
 import com.example.libraryproject.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +17,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 @EnableWebMvc
@@ -358,6 +359,57 @@ public class Controller {
         return new RedirectView("/reader");
     }
 
+    @GetMapping("reader/history")
+    @PreAuthorize("hasAuthority('READER')")
+    public String myHistory(Model model) {
+        List<HistoryDTO> dtos = new ArrayList<>();
+        historyService.getAllByReader(getLoggedReaderId()).stream().filter(history ->
+                        history.getReturnedAt() != null && history.getCreatedAt() != null)
+                .forEach(h -> dtos.add(historyService.historyToDto(h)));
+        model.addAttribute("history", dtos);
+        return "reader/book_history_reader";
+    }
+
+    @GetMapping("reader/historySorted")
+    @PreAuthorize("hasAuthority('READER')")
+    public String myHistorySorted(Model model, @RequestParam("dateTimeBefore") LocalDateTime before, @RequestParam("dateTimeAfter") LocalDateTime after) {
+        List<HistoryDTO> dtos = new ArrayList<>();
+        historyService.getAllByReader(getLoggedReaderId()).stream().filter(history ->
+                        history.getReturnedAt() != null && history.getCreatedAt() != null)
+                .filter(h2 ->
+                        h2.getCreatedAt().isAfter(after) && h2.getReturnedAt().isBefore(before))
+                        .forEach(h -> dtos.add(historyService.historyToDto(h)));
+        model.addAttribute("history", dtos);
+        return "reader/book_history_reader";
+    }
+
+    @GetMapping("reader/historySortUp")
+    @PreAuthorize("hasAuthority('READER')")
+    public String myHistorySortUp(Model model) {
+        List<History> allByReader = historyService.getAllByReader(getLoggedReaderId()).stream().filter(history ->
+                history.getReturnedAt() != null && history.getCreatedAt() != null).toList();
+        List<HistoryDTO> dtos = new ArrayList<>();
+        allByReader.forEach(h -> dtos.add(historyService.historyToDto(h)));
+
+        List<HistoryDTO> sorted = dtos.stream().sorted(Comparator.comparing(HistoryDTO::getCreatedAt)).toList();
+
+        model.addAttribute("history", sorted);
+        return "reader/book_history_reader";
+    }
+
+    @GetMapping("reader/historySortDown")
+    @PreAuthorize("hasAuthority('READER')")
+    public String myHistorySortDown(Model model) {
+        List<History> allByReader = historyService.getAllByReader(getLoggedReaderId()).stream().filter(history ->
+                history.getReturnedAt() != null && history.getCreatedAt() != null).toList();
+        List<HistoryDTO> dtos = new ArrayList<>();
+        allByReader.forEach(h -> dtos.add(historyService.historyToDto(h)));
+
+        List<HistoryDTO> sorted = dtos.stream().sorted(Comparator.comparing(HistoryDTO::getCreatedAt).reversed()).toList();
+
+        model.addAttribute("history", sorted);
+        return "reader/book_history_reader";
+    }
 
     // ==== HELP ====
     //

@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface BookRepo extends CrudRepository<Book, Long> {
     @Override
     Iterable<Book> findAll();
@@ -27,4 +29,7 @@ public interface BookRepo extends CrudRepository<Book, Long> {
     @Modifying
     @Query("UPDATE Book b SET b.rating = :rating WHERE b.id = :id")
     void updateRating(Double rating, Long id);
+
+    @Override
+    Optional<Book> findById(Long id);
 }

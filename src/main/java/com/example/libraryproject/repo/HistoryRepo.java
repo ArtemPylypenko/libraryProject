@@ -23,6 +23,6 @@ public interface HistoryRepo extends CrudRepository<History, Long> {
     @Query(value = "SELECT AVG(rating) from history where book_id = :bookId", nativeQuery = true)
     Double getAVGRating(Long bookId);
 
-    @Query(value = "SELECT * from history where = reader_id = :reader", nativeQuery = true)
+    @Query(value = "SELECT * from history where reader_id = :reader", nativeQuery = true)
     List<History> getAllByReader(Long reader);
 }
