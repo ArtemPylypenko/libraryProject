@@ -8,14 +8,13 @@
     <title>Library "Flower"</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="main_page_ladmin/main_page_admin.css" type="text/css">
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style>
         body {
-            background: linear-gradient(to right, #ec6ead, #FFDCB9BF) no-repeat fixed;
+            background-image: url("https://abrakadabra.fun/uploads/posts/2021-12/1640241511_2-abrakadabra-fun-p-zadnii-fon-biblioteka-2.jpg");
             background-size: cover;
         }
 
@@ -124,9 +123,6 @@
         }
 
 
-
-
-
     </style>
 
 </head>
@@ -146,22 +142,22 @@
 <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
 <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 <div class="form_book">
-<label>Libririan List:</label>
-<br>
-<ul>
-    <li class="curr_book" th:each="librarian : ${librarians}">
-        <form method="get" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
-            <label th:text="${librarian.email}" class="book-title"></label>
-            <br>
-            <input type="submit" value="Edit">
-        </form>
-    </li>
-</ul>
+    <label>Libririan List:</label>
+    <br>
+    <ul>
+        <li class="curr_book" th:each="librarian : ${librarians}">
+            <form method="get" th:action="@{'/librarian/edit/' + ${librarian.getId()}}">
+                <label th:text="${librarian.email}" class="book-title"></label>
+                <br>
+                <input type="submit" value="Edit">
+            </form>
+        </li>
+    </ul>
     <br>
     <br>
-<form  method="get" th:action="@{'/librarian/add'}">
-    <input class="btn btn-lg btn-primary" type="submit" id="addLibrarianButton" value="Add">
-</form>
+    <form method="get" th:action="@{'/librarian/add'}">
+        <input class="btn btn-lg btn-primary" type="submit" id="addLibrarianButton" value="Add">
+    </form>
 </div>
 </body>
 </html>
