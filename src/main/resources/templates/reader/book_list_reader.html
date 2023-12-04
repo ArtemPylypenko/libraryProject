@@ -93,7 +93,18 @@
             margin-right: 10px;
             cursor: pointer;
             transition: background-color 0.3s, border-color 0.3s;
+
+
         }
+
+        .history_bth{
+            background-color: rgba(50, 200, 180, 1);
+        }
+
+        .history_bth:hover{
+            background-color: rgba(50, 255, 180, 1);
+        }
+
 
     </style>
 </head>
@@ -106,6 +117,11 @@
 
 
         <div class="user-actions">
+
+            <form action="#">
+                <button class="btn btn-primary history_bth">History</button>
+            </form>
+
              <form  th:action="@{'/readerBooks'}" method="get">
                 <button class="btn btn-primary">My Books</button>
             </form>
